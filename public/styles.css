@@ -1,0 +1,69 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#icon
+{
+    width: 20%;
+}
+
+#banner
+{
+    background-color: white;
+    padding-top: 20px;
+}
+
+#banner img
+{
+    display: block;
+    margin: auto;
+}
+
+body
+{
+  background: url("./images/background/living-room-day.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+#nameText
+{
+  background-color: gainsboro;
+  border-radius: 10px;
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
+  width: 20%;
+  margin: auto;
+}
+
+#leftArrow
+{
+  width: 5%;
+}
+
+#rightArrow
+{
+  width: 5%;
+}
+
+#avatar
+{
+  width: 25%;
+}
+
+#playGame
+{
+  border-radius: 10px;
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
+}
+
+#isiNama
+{
+  width: 30%;
+  margin: auto;
+  text-align: center;
+  align-items: center;
+}
