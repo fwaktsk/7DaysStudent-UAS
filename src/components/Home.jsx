@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from "react-bootstrap/Button";
@@ -6,23 +6,90 @@ import Button from "react-bootstrap/Button";
 function Home(props)
 {
     const userData = props.data;
-    const [time, updateTime] = useState({day:"Minggu", h:0, m:0});
+    const time = props.clock;
     const [weather, changeWeather] = useState("sunny");
-    const [acts, toggleActs] = useState();
-
-    useEffect( () => {
-        console.log(acts);
-    }, [acts]);
+    const acts = props.busy;
+    const greet = props.greeting;
+    const mode = props.view;
 
     var h = time.h;
     var m = time.m;
+    var d = time.d;
     //function buat update status perinterval
+
+    const showTime = setInterval(function ()
+      {
+        if(mode == "home")
+        {
+            m = m + 1;
+            if (m >= 60)
+            {
+            m -= 60;
+            h += 1;
+            }
+            if (h >= 24)
+            {
+            h -= 24;
+            d += 1;
+            }
+
+            props.changeTime({d:d, h:h, m:m})
+
+            // if(h>=6 && h<=10)
+            // {
+            // initbg = "background-image: url('images/living-room-day.jpg')";
+            // props.changeGreet("Good Morning");
+            // }
+            // else if(h>10 && h<=15)
+            // {
+            // initbg = "background-image: url('images/living-room-day.jpg')";
+            // props.changeGreet("Good Day");
+            // }
+            // else if(h>15 && h<=18)
+            // {
+            // initbg = "background-image: url('images/living-room-day.jpg')";
+            // props.changeGreet("Good Afternoon");
+            // }
+            // else if(h>18 && h<=21)
+            // {
+            // var initbg = "background-image: url('images/living-room-night.jpg')";
+            // props.changeGreet("Good Evening");
+            // }
+            // else if((h>21 && h<24)||h<6)
+            // {
+            // initbg = "background-image: url('images/living-room-night.jpg')";
+            // props.changeGreet("Good Night");
+            // }
+            // if((h == 19 && m <= 10)||(h == 6 && m <= 10))
+            // {
+            // document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
+            // }
+
+            // if (m < 10 && h < 10)
+            // {
+            // document.getElementById("time").innerHTML = "Day: "+ d + "<br/>0" + h + ":0" + m;
+            // }
+            // else if (m < 10 && h >= 10)
+            // {
+            // document.getElementById("time").innerHTML = "Day: "+ d + "<br/>" + h + ":0" + m;
+            // }
+            // else if (m >= 10 && h < 10)
+            // {
+            // document.getElementById("time").innerHTML = "Day: "+ d + "<br/>0" + h + ":" + m;
+            // }
+            // else if (m >= 10 && h >= 10)
+            // {
+            // document.getElementById("time").innerHTML = "Day: "+ d + "<br/>" + h + ":" + m;
+            // }
+        }
+      }, 500);
 
     function eat()
       {
         var hunger = userData.status.hunger;
         if(hunger+1<100)
         {
+          props.isBusy(true);
           var img = userData.avatar;
           var path = img.split("/");
           var index = path[2].split(".", 1);
@@ -33,7 +100,6 @@ function Home(props)
           }else if(h >= 19 || h <= 6){ 
             document.getElementsByTagName("BODY")[0].setAttribute("style", "background-image: url('images/background/kitchen-night.jpg')");
           }
-          toggleActs("disabled");
           hunger += 5;
           document.getElementById("hunger").value = hunger; //edit
           if(h===5 && m>=20)
@@ -45,12 +111,12 @@ function Home(props)
             initbg = "background-image: url('images/background/living-room-night.jpg')";
           }
         //   setTimeout(function(){m += 30;},2500);
-        //   setTimeout(function()
-        //   {
-        //     toggleacts(false);
-        //     document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
-        //     props.dataFetch({...userData, avatar: img});
-        //   }, 3000);
+          setTimeout(function()
+          {
+            props.isBusy(false);
+            document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
+            props.dataFetch({...userData, avatar: img});
+          }, 3000);
         }
         else
         {
@@ -64,6 +130,7 @@ function Home(props)
         var hunger = userData.status.hunger;
         if(rest+1<100)
         {
+          props.isBusy(true);
           var img = userData.avatar;
           var path = img.split("/");
           var index = path[2].split(".", 1);
@@ -74,7 +141,6 @@ function Home(props)
           }else if(h >= 19 || h <= 6){ 
             document.getElementsByTagName("BODY")[0].setAttribute("style", "background-image: url('images/background/bed-night.jpg')");
           }
-          toggleActs("disabled");
           rest += 7;
           hunger -= 5;
           document.getElementById("rest").value = rest;
@@ -88,12 +154,12 @@ function Home(props)
             initbg = "background-image: url('images/background/living-room-night.jpg')";
           }
         //   setTimeout(function(){h += 3;},2500);
-        //   setTimeout(function()
-        //   {
-        //     toggleacts(false);
-        //     document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
-        //     props.dataFetch({...userData, avatar: img});
-        //   }, 3000);
+          setTimeout(function()
+          {
+            props.isBusy(false);
+            document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
+            props.dataFetch({...userData, avatar: img});
+          }, 3000);
         }
       }
       
@@ -102,6 +168,7 @@ function Home(props)
         var ent = userData.status.ent;
         if(ent+1 < 100)
         {
+            props.isBusy(true);
             var img = userData.avatar;
             var path = img.split("/");
             var index = path[2].split(".", 1);
@@ -113,7 +180,6 @@ function Home(props)
             newPath = "images/avatar/" + index + "-play-night.gif";
           }
           props.dataFetch({...userData, avatar: newPath});
-          toggleActs("disabled");
           var rest = userData.status.rest;
           var hunger = userData.status.hunger;
           ent += 9;
@@ -133,23 +199,23 @@ function Home(props)
             initbg = "background-image: url('images/background/living-room-night.jpg')";
           }
         //   setTimeout(function(){h += 1;},2500);
-        //   setTimeout(function()
-        //   {
-        //     toggleacts(false);
-        //     document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
-        //     props.dataFetch({...userData, avatar: img});
-        //   }, 3000);
+          setTimeout(function()
+          {
+            props.isBusy(false);
+            document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
+            props.dataFetch({...userData, avatar: img});
+          }, 3000);
         }
       }
 
       function learn()
       {
+        props.isBusy(true);
         var img = userData.avatar;
         var path = img.split("/");
         var index = path[2].split(".", 1);
         var newPath = "images/avatar/" + index + "-study.gif";
         props.dataFetch({...userData, avatar: newPath});
-        toggleActs("disabled");
         if (h >= 7 && h <= 18) {
             document.getElementsByTagName("BODY")[0].setAttribute("style", "background-image: url('images/background/study-day.jpg')");
         } else if (h >= 19 || h <= 6) {
@@ -190,17 +256,17 @@ function Home(props)
         //   document.getElementById("semester").innerHTML = "Semester " + sem;
         // }
         // setTimeout(function(){h += 2;},2500);
-        // setTimeout(function()
-        //   {
-        //     toggleActs(false);
-        //     document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
-        //     props.dataFetch({...userData, avatar: img});
-        //   }, 3000);
+        setTimeout(function()
+          {
+            props.isBusy(false);
+            document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
+            props.dataFetch({...userData, avatar: img});
+          }, 3000);
       }
 
     function GoTo()
     {
-        if(acts === "disabled")
+        if(acts)
         {
             return(
                 <Row>
@@ -230,7 +296,7 @@ function Home(props)
 
     function Business()
     {
-        if(acts === "disabled")
+        if(acts)
         {
             return (<Row>
                 {/* Actions TEST*/}
@@ -246,11 +312,10 @@ function Home(props)
             return (<Row>
                 {/* Actions TEST*/}
                 <p>Activities</p>
-                 {/* type="button" id="eat" onclick="eat()" class="btn btn-primary mt-3 mx-auto d-block" */}
-                <Button variant="success" onClick={!acts?eat:null} id="eat">Makan</Button>
-                <Button variant="success" onClick={!acts?sleep:null} id="sleep">Tidur</Button>
-                <Button variant="success" onClick={!acts?play:null} id="play">Main</Button>
-                <Button variant="success" onClick={!acts?learn:null} id="study"className="pe-auto">Belajar</Button>
+                <Button variant="success" onClick={eat} id="eat">Makan</Button>
+                <Button variant="success" onClick={sleep} id="sleep">Tidur</Button>
+                <Button variant="success" onClick={play} id="play">Main</Button>
+                <Button variant="success" onClick={learn} id="study">Belajar</Button>
             </Row>);
         }
     }
@@ -278,16 +343,16 @@ function Home(props)
             <div className="w-100"></div>
             <div id="home">
                 <h4>Semester 1</h4>
-                <h4 id="greet">Good Night, {userData.name}</h4>
-                <h4 id="time">{time.day}, {time.h}:{time.m}</h4>
-                <img id="avatar" width="25%" src={userData.avatar} alt={userData.avatar} />
+                <h4 id="greet">{greet}, {userData.name}</h4>
+                <h4 id="time">Day {d}, {h}:{m}</h4>
+                <img id="avatar" src={userData.avatar} alt={userData.avatar} />
             </div>
             </Row>
         </Col>
         <Col xs={4} id="actions">
-            <GoTo />
+            <GoTo/>
             <br />
-            <Business />
+            <Business/>
         </Col>
     </Row>
     );
