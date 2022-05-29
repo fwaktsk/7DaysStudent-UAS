@@ -4,16 +4,18 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import members from '../db/memberlist';
 
-function AboutUs()
+function AboutUs(props)
 {
 
     function Avatar(details) {
         return <img className="profpic" src={details.img} alt="avatar_img" />;
     }
 
-    function Detail(props) {
-        return <p className="contact">{props.info}</p>;
+    function Detail(data) {
+        return <p className="contact">{data.info}</p>;
     }
+
+    const exit = ()=>{props.playMode("setup")}
 
     function Card(details) {
         return (
@@ -23,8 +25,8 @@ function AboutUs()
               <Avatar img={details.imgURL} />
             </div>
             <div className="data">
-              <Detail info={details.tel} />
-              <Detail info={details.email} />
+              <Detail info={"NIM : "+details.nim} />
+              <Detail info={"Email : "+details.email} />
             </div>
           </div>
         );
@@ -36,7 +38,7 @@ function AboutUs()
             key={member.id}
             name={member.name}
             imgURL={member.imgURL}
-            tel={member.phone}
+            nim={member.nim}
             email={member.email}
           />
         );
@@ -44,8 +46,8 @@ function AboutUs()
 
 
     return <Col>
-    <Row>
-        <Button variant="danger" id="keluar">Exit</Button>
+    <Row id="keluar">
+        <Button variant="danger" onClick={exit}>Exit</Button>
     </Row>
     <Row id="cardContainer">
         {members.map(createCard)}

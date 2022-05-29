@@ -6,8 +6,8 @@ import AboutUs from "./components/AboutUs";
 
 function App() {
 
-  const [view,setView] = useState("aboutUs");
-  const [userData, setUserData] = useState({avatar:"", name:"", major:""});
+  const [view,setView] = useState("setup");
+  const [userData, setUserData] = useState({avatar:"", name:"", major:"", status: {hunger:75, ent: 75, rest: 75, study: 0}});
 
   const playerSetup = (user) => {setUserData(user)}
 
@@ -21,11 +21,11 @@ function App() {
     }
     else if(view === "home")
     {
-      return <Home data = {userData} playMode = {updateMode}/>;
+      return <Home data = {userData} playMode = {updateMode} dataFetch = {playerSetup}/>;
     }
-    else if(view === "aboutUs")
+    else if(view === "credits")
     {
-      return <AboutUs />;
+      return <AboutUs playMode = {updateMode}/>;
     }
   }
 

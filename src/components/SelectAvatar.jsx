@@ -13,10 +13,12 @@ function SelectAvatar(props)
     const startGame = ()=>{
       if(avatar !== "" && name !== "" && major !== "")
       {
-        props.dataFetch({avatar:avatar, name:name, major:major});
+        props.dataFetch({avatar:avatar, name:name, major:major, status: {hunger:75, ent: 75, rest: 75, study: 0}});
         props.playMode("home");
       }
     }
+
+    const Credits = ()=>{props.playMode("credits")};
     
     function pickMajor(key)
     {
@@ -94,14 +96,11 @@ function SelectAvatar(props)
               </Dropdown.Menu>
             </Dropdown>
             <div id="centerDiv">
-              {/* <BrowserRouter>
-                <Routes>
-                  <Route path="" element={<Startmenu/>}/>
-                </Routes>
-              </BrowserRouter> */}
-              <Button variant="primary" id="playGame" onClick={startGame} >PLAY</Button>
+              <Button variant="success" id="playGame" onClick={startGame} >PLAY</Button>
             </div>
-            {/*  gatau lagi :V */}
+            <div id="centerDiv">
+              <Button variant="warning" id="aboutUs" onClick={Credits}>Credits</Button>
+            </div>
           </form>
         </div>
     </div>);
