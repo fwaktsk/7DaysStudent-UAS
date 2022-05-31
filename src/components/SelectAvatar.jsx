@@ -14,6 +14,8 @@ function SelectAvatar(props)
       if(avatar !== "" && name !== "" && major !== "")
       {
         props.dataFetch({avatar:avatar, name:name, major:major, status: {hunger:75, ent: 75, rest: 75, study: 0}});
+        props.timeStart({d:1, h:0, m:0})
+        // fetchAPIHandler();
         props.playMode("home");
       }
     }
