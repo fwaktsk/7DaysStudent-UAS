@@ -3,7 +3,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-function Home(props) {
+function Campus(props) {
   const userData = props.data;
   const time = props.clock;
   const weather = props.weather;
@@ -203,12 +203,8 @@ function Home(props) {
     }, 1000);
   }
 
-  function goToCampus() {
-    if (time.h >= 6) {
-      props.playMode("campus");
-    } else {
-      alert("Masih malem dek");
-    }
+  function goToHome() {
+    props.playMode("home");
   }
 
   function goToCafe() {
@@ -240,15 +236,12 @@ function Home(props) {
       return (
         <Row>
           {/* GoTo */}
-          <p>@ Home</p>
+          <p>@ Campus</p>
           <Button variant="success" disabled>
-            Kampus
+            Home
           </Button>
           <Button variant="success" disabled>
             Kafe
-          </Button>
-          <Button variant="success" disabled>
-            Supermarket
           </Button>
           <Button variant="success" disabled>
             Taman Rekreasi
@@ -262,9 +255,9 @@ function Home(props) {
       return (
         <Row>
           {/* GoTo */}
-          <p>@ Home</p>
-          <Button variant="success" onClick={goToCampus}>
-            Kampus
+          <p>@ Campus</p>
+          <Button variant="success" onClick={goToHome}>
+            Home
           </Button>
           <Button variant="success" onClick={goToCafe}>
             Kafe
@@ -286,6 +279,9 @@ function Home(props) {
         <Row>
           {/* Actions TEST*/}
           <p>Activities</p>
+          <Button variant="success" disabled id="study">
+            Ikut Kelas
+          </Button>
           <Button variant="success" disabled id="eat">
             Makan
           </Button>
@@ -295,9 +291,6 @@ function Home(props) {
           <Button variant="success" disabled id="play">
             Main
           </Button>
-          <Button variant="success" disabled id="study">
-            Belajar
-          </Button>
         </Row>
       );
     } else {
@@ -305,6 +298,9 @@ function Home(props) {
         <Row>
           {/* Actions TEST*/}
           <p>Activities</p>
+          <Button variant="success" onClick={learn} id="study">
+            Ikut Kelas
+          </Button>
           <Button variant="success" onClick={eat} id="eat">
             Makan
           </Button>
@@ -313,9 +309,6 @@ function Home(props) {
           </Button>
           <Button variant="success" onClick={play} id="play">
             Main
-          </Button>
-          <Button variant="success" onClick={learn} id="study">
-            Belajar
           </Button>
         </Row>
       );
@@ -421,4 +414,4 @@ function Home(props) {
   );
 }
 
-export default Home;
+export default Campus;

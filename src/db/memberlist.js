@@ -3,7 +3,7 @@ const members = [
       id: 1,
       name: "Dwi Rianto, S. Pd.",
       imgURL:
-        "images/about/nto.jpg", //gatau kenapa gamau load kalo upload image//solved
+        "images/about/nto.jpg",
       nim: "00000047842",
       email: "dwi.rianto@student.umn.ac.id"
     },

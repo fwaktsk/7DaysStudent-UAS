@@ -3,7 +3,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-function Home(props) {
+function Theater(props) {
   const userData = props.data;
   const time = props.clock;
   const weather = props.weather;
@@ -41,81 +41,7 @@ function Home(props) {
     };
   }, [time]);
 
-  function eat() {
-    var status = userData.status;
-    if (status.hunger + 1 < 100) {
-      props.isBusy(true);
-      var img = userData.avatar;
-      var path = img.split("/");
-      var index = path[2].split(".", 1);
-      var newPath = "images/avatar/" + index + "-eat.gif";
-      props.dataFetch({ ...userData, avatar: newPath });
-      if (time.h >= 7 && time.h <= 18) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/kitchen-day.jpg')"
-          );
-      } else if (time.h >= 19 || time.h <= 6) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/kitchen-night.jpg')"
-          );
-      }
-      status.hunger += 5;
-      props.dataFetch({ ...userData, status: status });
-      //   setTimeout(function(){m += 30;},2500);
-      setTimeout(function () {
-        setMainBG();
-        props.isBusy(false);
-        props.dataFetch({ ...userData, avatar: img });
-      }, 1000);
-    } else {
-      alert(userData.name + " sudah kenyang. Nanti malah muntah");
-    }
-  }
-
-  function sleep() {
-    var status = userData.status;
-    if (status.rest + 1 < 100) {
-      props.isBusy(true);
-      var img = userData.avatar;
-      var path = img.split("/");
-      var index = path[2].split(".", 1);
-      var newPath = "images/avatar/" + index + "-sleep.gif";
-      props.dataFetch({ ...userData, avatar: newPath });
-      if (time.h >= 7 && time.h <= 18) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/bed-day.jpg')"
-          );
-      } else if (time.h >= 19 || time.h <= 6) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/bed-night.jpg')"
-          );
-      }
-      status.rest += 7;
-      status.hunger -= 5;
-      props.dataFetch({ ...userData, status: status });
-      //   setTimeout(function(){h += 3;},2500);
-      setTimeout(function () {
-        setMainBG();
-        props.isBusy(false);
-        // document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
-        props.dataFetch({ ...userData, avatar: img });
-      }, 1000);
-    }
-  }
-
-  function play() {
+  function watch() {
     var status = userData.status;
     if (status.ent + 1 < 100) {
       props.isBusy(true);
@@ -154,53 +80,8 @@ function Home(props) {
     }
   }
 
-  function learn() {
-    props.isBusy(true);
-    var img = userData.avatar;
-    var path = img.split("/");
-    var index = path[2].split(".", 1);
-    var newPath = "images/avatar/" + index + "-study.gif";
-    props.dataFetch({ ...userData, avatar: newPath });
-    if (time.h >= 7 && time.h <= 18) {
-      document
-        .getElementsByTagName("BODY")[0]
-        .setAttribute(
-          "style",
-          "background-image: url('images/background/study-day.jpg')"
-        );
-    } else if (time.h >= 19 || time.h <= 6) {
-      document
-        .getElementsByTagName("BODY")[0]
-        .setAttribute(
-          "style",
-          "background-image: url('images/background/study-night.jpg')"
-        );
-    }
-    var status = userData.status;
-    status.study += 5;
-    status.ent -= 10;
-    status.rest -= 5;
-    status.hunger -= 5;
-    //edit
-    props.dataFetch({ ...userData, status: status });
-    // if(study == 100)
-    // {
-    //   if(sem == 8)
-    //   {
-    //     gameOver();
-    //   }
-    //   document.getElementById("belajar").value = 0;
-    //   st /= 2;
-    //   sem += 1;
-    //   d = 0;
-    //   document.getElementById("semester").innerHTML = "Semester " + sem;
-    // }
-    // setTimeout(function(){h += 2;},2500);
-    setTimeout(function () {
-      setMainBG();
-      props.isBusy(false);
-      props.dataFetch({ ...userData, avatar: img });
-    }, 1000);
+  function goToHome() {
+    props.playMode("home");
   }
 
   function goToCampus() {
@@ -227,28 +108,17 @@ function Home(props) {
     }
   }
 
-  function goToTheater() {
-    if (time.h >= 8) {
-      props.playMode("cgv");
-    } else {
-      alert("Gada anime babang uibu");
-    }
-  }
-
   function GoTo() {
     if (acts) {
       return (
         <Row>
           {/* GoTo */}
-          <p>@ Home</p>
+          <p>@ Cinema XXI</p>
+          <Button variant="success" disabled>
+            Home
+          </Button>
           <Button variant="success" disabled>
             Kampus
-          </Button>
-          <Button variant="success" disabled>
-            Kafe
-          </Button>
-          <Button variant="success" disabled>
-            Supermarket
           </Button>
           <Button variant="success" disabled>
             Taman Rekreasi
@@ -262,17 +132,17 @@ function Home(props) {
       return (
         <Row>
           {/* GoTo */}
-          <p>@ Home</p>
+          <p>@ Cinema XXI</p>
+          <Button variant="success" onClick={goToHome}>
+            Home
+          </Button>
           <Button variant="success" onClick={goToCampus}>
             Kampus
           </Button>
           <Button variant="success" onClick={goToCafe}>
-            Kafe
+            Cafe
           </Button>
           <Button variant="success" onClick={goToPark}>
-            Taman Rekreasi
-          </Button>
-          <Button variant="success" onClick={goToTheater}>
             Theater
           </Button>
         </Row>
@@ -286,17 +156,8 @@ function Home(props) {
         <Row>
           {/* Actions TEST*/}
           <p>Activities</p>
-          <Button variant="success" disabled id="eat">
-            Makan
-          </Button>
-          <Button variant="success" disabled id="sleep">
-            Tidur
-          </Button>
-          <Button variant="success" disabled id="play">
-            Main
-          </Button>
-          <Button variant="success" disabled id="study">
-            Belajar
+          <Button variant="success" disabled id="watch">
+            Nonton
           </Button>
         </Row>
       );
@@ -305,17 +166,8 @@ function Home(props) {
         <Row>
           {/* Actions TEST*/}
           <p>Activities</p>
-          <Button variant="success" onClick={eat} id="eat">
-            Makan
-          </Button>
-          <Button variant="success" onClick={sleep} id="sleep">
-            Tidur
-          </Button>
-          <Button variant="success" onClick={play} id="play">
-            Main
-          </Button>
-          <Button variant="success" onClick={learn} id="study">
-            Belajar
+          <Button variant="success" onClick={watch} id="watch">
+            Nonton
           </Button>
         </Row>
       );
@@ -421,4 +273,4 @@ function Home(props) {
   );
 }
 
-export default Home;
+export default Theater;
