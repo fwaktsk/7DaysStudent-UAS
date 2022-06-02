@@ -248,9 +248,6 @@ function Home(props) {
             Kafe
           </Button>
           <Button variant="success" disabled>
-            Supermarket
-          </Button>
-          <Button variant="success" disabled>
             Taman Rekreasi
           </Button>
           <Button variant="success" disabled>
