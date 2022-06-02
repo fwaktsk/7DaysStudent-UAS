@@ -1,0 +1,237 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: url("./images/background/Main\ Menu.png") no-repeat center center fixed;
+  background-size: cover;
+}
+
+#icon
+{
+    width: 20%;
+}
+
+#banner
+{
+    background-color: rgb(46, 46, 46);
+    padding-top: 20px;
+    color: #f0f0f0;
+}
+
+#banner img
+{
+    display: block;
+    margin: auto;
+}
+
+#leftArrow
+{
+  width: 5%;
+}
+
+#rightArrow
+{
+  width: 5%;
+}
+
+#avatar
+{
+  width: 25%;
+}
+
+#home #avatar
+{
+  width: 50%;
+}
+
+#playGame
+{
+  border-radius: 5px;
+  margin: 5px auto;
+}
+
+/* #dropdown-basic
+{
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
+} */
+
+#playerDataForm
+{
+  background-color: rgba(142, 168, 185, 0.8);
+  width: 35%;
+  margin: auto;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+#nameText
+{
+  border-radius: 5px;
+  width: 10%;
+  margin: auto;
+  text-align: center;
+  color: #f0f0f0;
+  text-shadow: #111;
+}
+
+#fillName
+{
+  width: 50%;
+  border-radius: 5px;
+  margin: auto;
+  text-align: center;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+#selectMajor
+{
+  align-items: center;
+  text-align: center;
+  margin: 6px auto;
+  border-radius: 10px;
+}
+
+#centerDiv
+{
+  text-align: center;
+  padding: 6px;
+}
+
+#ui
+{
+    background: rgba(0, 0, 0, 0.5) no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    border-radius: 10px;
+    margin: auto;
+    padding: 10px;
+    height: 250vh;
+}
+
+#status
+{
+  align-content: center;
+  text-align: center;
+  width: 70%;
+}
+
+#status meter
+{
+    width: 125px;
+    height: 50px;
+}
+
+#status progress
+{
+    width: 125px;
+    height: 50px;
+}
+
+#actions
+{
+  align-content: center;
+  text-align: center;
+  width: 30%;
+}
+
+#actions button
+{
+  width: 60%;
+  margin: 3px auto;
+  padding: 5%;
+}
+
+/* #belajar{
+
+} */
+
+.card {
+  border-radius: 25px;
+  display: block;
+  width: 41%;
+  background-color: whitesmoke;
+  margin: 50px;
+  height: 200px;
+  padding: 25px 15px;
+  text-align: left;
+}
+
+.name {
+  border-radius: 25px 25px 0 0;
+  padding: 20px;
+  background: burlywood;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: calc(100% - 1px);
+  height: 100px;
+}
+
+.name h2 {
+  font-size: 1.5em;
+  color: #2d3436;
+  display: flex;
+  flex: 1;
+  margin: 5% 10px 0;
+}
+
+.profpic {
+  margin: 30px 20px 0 0;
+  border: white solid 7px;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+}
+
+.data {
+  margin-top: 100px;
+}
+
+.contact {
+  padding: 0px 10px;
+  margin: 10px 0;
+  color: grey;
+}
+
+#keluar{
+  float: right;
+  width: 10%;
+  padding: 12px;
+  margin: auto;
+}
+
+.phone{
+  width: 250px;
+  border: 1.5vh solid #111;
+  border-radius: 4.5vh;
+  background-color: #f0f0f0;
+  color: #111;
+  margin: auto;
+  word-wrap: break-word;
+}
+
+.phone img
+{
+  width: 100%;
+  height: 50%;
+}
+
+.phone .notch-container {
+  top: 0;
+  width: 100%;
+  height: 20px;
+}
+
+.phone .notch-container .notch {
+  width: 10vh;
+  height: 2.325vh;
+  margin: 0 auto;
+  background-color: #111;
+  border-bottom-left-radius: 2.334vh;
+  border-bottom-right-radius: 2.334vh;
+}
