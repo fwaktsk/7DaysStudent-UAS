@@ -65,10 +65,10 @@ function Home(props) {
             "background-image: url('images/background/kitchen-night.jpg')"
           );
       }
-      status.hunger += 5;
-      props.dataFetch({ ...userData, status: status });
       //   setTimeout(function(){m += 30;},2500);
       setTimeout(function () {
+        status.hunger += 5;
+        props.dataFetch({ ...userData, status: status });
         setMainBG();
         props.isBusy(false);
         props.dataFetch({ ...userData, avatar: img });
@@ -102,14 +102,13 @@ function Home(props) {
             "background-image: url('images/background/bed-night.jpg')"
           );
       }
-      status.rest += 7;
-      status.hunger -= 5;
-      props.dataFetch({ ...userData, status: status });
       //   setTimeout(function(){h += 3;},2500);
       setTimeout(function () {
+        status.rest += 7;
+        status.hunger -= 5;
+        props.dataFetch({ ...userData, status: status });
         setMainBG();
         props.isBusy(false);
-        // document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
         props.dataFetch({ ...userData, avatar: img });
       }, 1000);
     }
@@ -140,13 +139,12 @@ function Home(props) {
         newPath = "images/avatar/" + index + "-play-night.gif";
       }
       props.dataFetch({ ...userData, avatar: newPath });
-      status.ent += 9;
-      status.rest -= 5;
-      status.hunger -= 10;
-      //edit
-      props.dataFetch({ ...userData, status: status });
       //   setTimeout(function(){h += 1;},2500);
       setTimeout(function () {
+        status.ent += 9;
+        status.rest -= 5;
+        status.hunger -= 10;
+        props.dataFetch({ ...userData, status: status });
         setMainBG();
         props.isBusy(false);
         props.dataFetch({ ...userData, avatar: img });
@@ -176,13 +174,6 @@ function Home(props) {
           "background-image: url('images/background/study-night.jpg')"
         );
     }
-    var status = userData.status;
-    status.study += 5;
-    status.ent -= 10;
-    status.rest -= 5;
-    status.hunger -= 5;
-    //edit
-    props.dataFetch({ ...userData, status: status });
     // if(study == 100)
     // {
     //   if(sem == 8)
@@ -197,6 +188,12 @@ function Home(props) {
     // }
     // setTimeout(function(){h += 2;},2500);
     setTimeout(function () {
+      var status = userData.status;
+      status.study += 1;
+      status.ent -= 10;
+      status.rest -= 5;
+      status.hunger -= 5;
+      props.dataFetch({ ...userData, status: status });
       setMainBG();
       props.isBusy(false);
       props.dataFetch({ ...userData, avatar: img });

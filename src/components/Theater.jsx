@@ -66,13 +66,12 @@ function Theater(props) {
         newPath = "images/avatar/" + index + "-play-night.gif";
       }
       props.dataFetch({ ...userData, avatar: newPath });
-      status.ent += 9;
-      status.rest -= 5;
-      status.hunger -= 10;
-      //edit
-      props.dataFetch({ ...userData, status: status });
       //   setTimeout(function(){h += 1;},2500);
       setTimeout(function () {
+        status.ent += 9;
+        status.rest -= 5;
+        status.hunger -= 10;
+        props.dataFetch({ ...userData, status: status });
         setMainBG();
         props.isBusy(false);
         props.dataFetch({ ...userData, avatar: img });
