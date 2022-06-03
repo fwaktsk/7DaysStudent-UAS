@@ -17,15 +17,15 @@ function Campus(props) {
   function setMainBG() {
     if (String(weather) === "Rain") {
       var initbg =
-        "background-image: url('images/background/uni-lobby-day.jpeg')";
+        "background-image: url('images/background/uni-lobby-day.jpeg')"; // Rain
     } else if (time.h >= 6 && time.h <= 18) {
-      initbg = "background-image: url('images/background/uni-lobby-day.jpeg')";
+      initbg = "background-image: url('images/background/uni-lobby-day.jpeg')"; // Pagi
     } else if (time.h > 18 && time.h < 24) {
       initbg =
-        "background-image: url('images/background/living-room-night.jpg')";
+        "background-image: url('images/background/living-room-night.jpg')"; // Malam
     } else if (time.h < 6) {
       initbg =
-        "background-image: url('images/background/living-room-pastmidnight.jpg')";
+        "background-image: url('images/background/living-room-pastmidnight.jpg')"; // Tengah Malam
     }
     document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
   }
@@ -41,7 +41,7 @@ function Campus(props) {
     };
   }, [time]);
 
-  function eat() {
+  function eat() { //kantin
     var status = userData.status;
     if (status.hunger + 1 < 100) {
       props.isBusy(true);
@@ -78,44 +78,7 @@ function Campus(props) {
     }
   }
 
-  function sleep() {
-    var status = userData.status;
-    if (status.rest + 1 < 100) {
-      props.isBusy(true);
-      var img = userData.avatar;
-      var path = img.split("/");
-      var index = path[2].split(".", 1);
-      var newPath = "images/avatar/" + index + "-sleep.gif";
-      props.dataFetch({ ...userData, avatar: newPath });
-      if (time.h >= 7 && time.h <= 18) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/bed-day.jpg')"
-          );
-      } else if (time.h >= 19 || time.h <= 6) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/bed-night.jpg')"
-          );
-      }
-      //   setTimeout(function(){h += 3;},2500);
-      setTimeout(function () {
-        status.rest += 7;
-        status.hunger -= 5;
-        props.dataFetch({ ...userData, status: status });
-        setMainBG();
-        props.isBusy(false);
-        // document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
-        props.dataFetch({ ...userData, avatar: img });
-      }, 1000);
-    }
-  }
-
-  function play() {
+  function play() { // library baca buku
     var status = userData.status;
     if (status.ent + 1 < 100) {
       props.isBusy(true);
@@ -142,9 +105,10 @@ function Campus(props) {
       props.dataFetch({ ...userData, avatar: newPath });
       //   setTimeout(function(){h += 1;},2500);
       setTimeout(function () {
-        status.ent += 9;
+        status.study += 3;
+        status.ent += 3;
         status.rest -= 5;
-        status.hunger -= 10;
+        status.hunger -= 5;
         props.dataFetch({ ...userData, status: status });
         setMainBG();
         props.isBusy(false);
@@ -153,7 +117,7 @@ function Campus(props) {
     }
   }
 
-  function learn() {
+  function learn() { //ikut kelas
     props.isBusy(true);
     var img = userData.avatar;
     var path = img.split("/");
@@ -190,7 +154,7 @@ function Campus(props) {
     // setTimeout(function(){h += 2;},2500);
     setTimeout(function () {
       var status = userData.status;
-      status.study += 5;
+      status.study += 10;
       status.ent -= 10;
       status.rest -= 5;
       status.hunger -= 5;

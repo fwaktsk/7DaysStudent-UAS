@@ -17,15 +17,15 @@ function Park(props) {
   function setMainBG() {
     if (String(weather) === "Rain") {
       var initbg =
-        "background-image: url('images/background/dufan.png')";
+        "background-image: url('images/background/dufan.png')"; // Rain
     } else if (time.h >= 6 && time.h <= 18) {
-      initbg = "background-image: url('images/background/dufan.png')";
+      initbg = "background-image: url('images/background/dufan.png')"; // Pagi
     } else if (time.h > 18 && time.h < 24) {
       initbg =
-        "background-image: url('images/background/living-room-night.jpg')";
+        "background-image: url('images/background/living-room-night.jpg')"; // Malam
     } else if (time.h < 6) {
       initbg =
-        "background-image: url('images/background/living-room-pastmidnight.jpg')";
+        "background-image: url('images/background/living-room-pastmidnight.jpg')"; // Tengah Malam
     }
     document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
   }

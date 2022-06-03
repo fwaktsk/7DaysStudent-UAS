@@ -17,15 +17,15 @@ function Home(props) {
   function setMainBG() {
     if (String(weather) === "Rain") {
       var initbg =
-        "background-image: url('images/background/living-room-dayrain.jpg')";
+        "background-image: url('images/background/living-room-dayrain.jpg')"; // Rain
     } else if (time.h >= 6 && time.h <= 18) {
-      initbg = "background-image: url('images/background/living-room-day.jpg')";
+      initbg = "background-image: url('images/background/living-room-day.jpg')"; // Pagi
     } else if (time.h > 18 && time.h < 24) {
       initbg =
-        "background-image: url('images/background/living-room-night.jpg')";
+        "background-image: url('images/background/living-room-night.jpg')"; // Malam
     } else if (time.h < 6) {
       initbg =
-        "background-image: url('images/background/living-room-pastmidnight.jpg')";
+        "background-image: url('images/background/living-room-pastmidnight.jpg')"; // Tengah Malam
     }
     document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
   }
@@ -189,8 +189,8 @@ function Home(props) {
     // setTimeout(function(){h += 2;},2500);
     setTimeout(function () {
       var status = userData.status;
-      status.study += 1;
-      status.ent -= 10;
+      status.study += 5;
+      status.ent -= 5;
       status.rest -= 5;
       status.hunger -= 5;
       props.dataFetch({ ...userData, status: status });
@@ -211,18 +211,8 @@ function Home(props) {
   function goToCafe() {
     if (time.h >= 9) {
       props.playMode("cafe");
-      document
-        .getElementsByTagName("BODY")[0]
-        .setAttribute(
-          "style",
-          "background-image: url('images/background/cafe.jpeg')");
     } else {
       alert("Cafe masih tutup tsay");
-      document
-        .getElementsByTagName("BODY")[0]
-        .setAttribute(
-          "style",
-          "background-image: url('images/background/cafe.jpeg')");
     }
   }
 

@@ -17,15 +17,15 @@ function Cafe(props) {
   function setMainBG() {
     if (String(weather) === "Rain") {
       var initbg =
-        "background-image: url('images/background/cafe.jpeg')";
+        "background-image: url('images/background/cafe.jpeg')"; // Rain
     } else if (time.h >= 6 && time.h <= 18) {
-      initbg = "background-image: url('images/background/cafe.jpeg')";
+      initbg = "background-image: url('images/background/cafe.jpeg')"; // Pagi
     } else if (time.h > 18 && time.h < 24) {
       initbg =
-        "background-image: url('images/background/cafe.jpeg')";
+        "background-image: url('images/background/cafe.jpeg')"; // Malam
     } else if (time.h < 6) {
       initbg =
-        "background-image: url('images/background/cafe.jpeg')";
+        "background-image: url('images/background/cafe.jpeg')"; // Tengah Malam
     }
     document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
   }
