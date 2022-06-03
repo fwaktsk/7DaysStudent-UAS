@@ -19,7 +19,7 @@ const members = [
       id: 3,
       name: "Moch Bima, S. Heeesh.",
       imgURL:
-        "https://i.pinimg.com/originals/e3/94/47/e39447de921955826b1e498ccf9a39af.png",
+        "images/about/bima.jpg",
       nim: "00000045997",
       email: "moch.bima@student.umn.ac.id"
     },
