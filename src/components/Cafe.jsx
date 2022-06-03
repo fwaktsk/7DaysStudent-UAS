@@ -17,15 +17,15 @@ function Cafe(props) {
   function setMainBG() {
     if (String(weather) === "Rain") {
       var initbg =
-        "background-image: url('images/background/living-room-dayrain.jpg')";
+        "background-image: url('images/background/cafe.jpeg')";
     } else if (time.h >= 6 && time.h <= 18) {
-      initbg = "background-image: url('images/background/living-room-day.jpg')";
+      initbg = "background-image: url('images/background/cafe.jpeg')";
     } else if (time.h > 18 && time.h < 24) {
       initbg =
-        "background-image: url('images/background/living-room-night.jpg')";
+        "background-image: url('images/background/cafe.jpeg')";
     } else if (time.h < 6) {
       initbg =
-        "background-image: url('images/background/living-room-pastmidnight.jpg')";
+        "background-image: url('images/background/cafe.jpeg')";
     }
     document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
   }
@@ -55,14 +55,14 @@ function Cafe(props) {
           .getElementsByTagName("BODY")[0]
           .setAttribute(
             "style",
-            "background-image: url('images/background/kitchen-day.jpg')"
+            "background-image: url('images/background/cafe.jpeg')"
           );
       } else if (time.h >= 19 || time.h <= 6) {
         document
           .getElementsByTagName("BODY")[0]
           .setAttribute(
             "style",
-            "background-image: url('images/background/kitchen-night.jpg')"
+            "background-image: url('images/background/cafe.jpeg')"
           );
       }
       //   setTimeout(function(){m += 30;},2500);
@@ -127,7 +127,7 @@ function Cafe(props) {
           .getElementsByTagName("BODY")[0]
           .setAttribute(
             "style",
-            "background-image: url('images/background/play-day.jpg')"
+            "background-image: url('images/background/cafe.jpeg')"
           );
         var newPath = "images/avatar/" + index + "-play-day.gif";
       } else if (time.h >= 19 || time.h <= 6) {
@@ -135,7 +135,7 @@ function Cafe(props) {
           .getElementsByTagName("BODY")[0]
           .setAttribute(
             "style",
-            "background-image: url('images/background/play-night.jpg')"
+            "background-image: url('images/background/cafe.jpeg')"
           );
         newPath = "images/avatar/" + index + "-play-night.gif";
       }
@@ -152,7 +152,7 @@ function Cafe(props) {
       }, 1000);
     }
   }
-
+//s
   function goToHome() {
     props.playMode("home");
   }

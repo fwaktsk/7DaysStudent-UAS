@@ -17,9 +17,9 @@ function Park(props) {
   function setMainBG() {
     if (String(weather) === "Rain") {
       var initbg =
-        "background-image: url('images/background/living-room-dayrain.jpg')";
+        "background-image: url('images/background/dufan.png')";
     } else if (time.h >= 6 && time.h <= 18) {
-      initbg = "background-image: url('images/background/living-room-day.jpg')";
+      initbg = "background-image: url('images/background/dufan.png')";
     } else if (time.h > 18 && time.h < 24) {
       initbg =
         "background-image: url('images/background/living-room-night.jpg')";
@@ -48,14 +48,14 @@ function Park(props) {
       var img = userData.avatar;
       var path = img.split("/");
       var index = path[2].split(".", 1);
-      var newPath = "images/avatar/" + index + "-eat.gif";
+      var newPath = "images/avatar/" + index + "-play-day.gif";
       props.dataFetch({ ...userData, avatar: newPath });
       if (time.h >= 7 && time.h <= 18) {
         document
           .getElementsByTagName("BODY")[0]
           .setAttribute(
             "style",
-            "background-image: url('images/background/kitchen-day.jpg')"
+            "background-image: url('images/background/dufan.jpg')"
           );
       } else if (time.h >= 19 || time.h <= 6) {
         document
@@ -230,13 +230,7 @@ function Park(props) {
           {/* Actions TEST*/}
           <p>Activities</p>
           <Button variant="success" disabled id="eat">
-            Makan
-          </Button>
-          <Button variant="success" disabled id="sleep">
-            Minum
-          </Button>
-          <Button variant="success" disabled id="play">
-            Nonton
+            Naik Kincir Angin
           </Button>
         </Row>
       );
@@ -246,13 +240,7 @@ function Park(props) {
           {/* Actions TEST*/}
           <p>Activities</p>
           <Button variant="success" onClick={eat} id="eat">
-            Makan
-          </Button>
-          <Button variant="success" onClick={drink} id="play">
-            Minum
-          </Button>
-          <Button variant="success" onClick={play} id="play">
-            Nonton
+            Naik Wahana
           </Button>
         </Row>
       );

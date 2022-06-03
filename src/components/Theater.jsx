@@ -17,15 +17,15 @@ function Theater(props) {
   function setMainBG() {
     if (String(weather) === "Rain") {
       var initbg =
-        "background-image: url('images/background/living-room-dayrain.jpg')";
+        "background-image: url('images/background/cgv.jpg')";
     } else if (time.h >= 6 && time.h <= 18) {
-      initbg = "background-image: url('images/background/living-room-day.jpg')";
+      initbg = "background-image: url('images/background/cgv.jpg')";
     } else if (time.h > 18 && time.h < 24) {
       initbg =
-        "background-image: url('images/background/living-room-night.jpg')";
+        "background-image: url('images/background/cgv.jpg')";
     } else if (time.h < 6) {
       initbg =
-        "background-image: url('images/background/living-room-pastmidnight.jpg')";
+        "background-image: url('images/background/cgv.jpg')";
     }
     document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
   }

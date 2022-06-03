@@ -17,9 +17,9 @@ function Campus(props) {
   function setMainBG() {
     if (String(weather) === "Rain") {
       var initbg =
-        "background-image: url('images/background/living-room-dayrain.jpg')";
+        "background-image: url('images/background/uni-lobby-day.jpeg')";
     } else if (time.h >= 6 && time.h <= 18) {
-      initbg = "background-image: url('images/background/living-room-day.jpg')";
+      initbg = "background-image: url('images/background/uni-lobby-day.jpeg')";
     } else if (time.h > 18 && time.h < 24) {
       initbg =
         "background-image: url('images/background/living-room-night.jpg')";
@@ -55,14 +55,14 @@ function Campus(props) {
           .getElementsByTagName("BODY")[0]
           .setAttribute(
             "style",
-            "background-image: url('images/background/kitchen-day.jpg')"
+            "background-image: url('images/background/kantin_umn.jpg')"
           );
       } else if (time.h >= 19 || time.h <= 6) {
         document
           .getElementsByTagName("BODY")[0]
           .setAttribute(
             "style",
-            "background-image: url('images/background/kitchen-night.jpg')"
+            "background-image: url('images/background/kantin_umn.jpg')"
           );
       }
       //   setTimeout(function(){m += 30;},2500);
@@ -127,15 +127,15 @@ function Campus(props) {
           .getElementsByTagName("BODY")[0]
           .setAttribute(
             "style",
-            "background-image: url('images/background/play-day.jpg')"
+            "background-image: url('images/background/uni-library.jpeg')"
           );
-        var newPath = "images/avatar/" + index + "-play-day.gif";
+        var newPath = "images/avatar/" + index + "-read.png";
       } else if (time.h >= 19 || time.h <= 6) {
         document
           .getElementsByTagName("BODY")[0]
           .setAttribute(
             "style",
-            "background-image: url('images/background/play-night.jpg')"
+            "background-image: url('images/background/uni-library.jpeg')"
           );
         newPath = "images/avatar/" + index + "-play-night.gif";
       }
@@ -165,14 +165,14 @@ function Campus(props) {
         .getElementsByTagName("BODY")[0]
         .setAttribute(
           "style",
-          "background-image: url('images/background/study-day.jpg')"
+          "background-image: url('images/background/kelas_umn.jpeg')"
         );
     } else if (time.h >= 19 || time.h <= 6) {
       document
         .getElementsByTagName("BODY")[0]
         .setAttribute(
           "style",
-          "background-image: url('images/background/study-night.jpg')"
+          "background-image: url('images/background/kelas_umn.jpeg')"
         );
     }
     // if(study == 100)
@@ -283,11 +283,8 @@ function Campus(props) {
           <Button variant="success" disabled id="eat">
             Makan
           </Button>
-          <Button variant="success" disabled id="sleep">
-            Tidur
-          </Button>
           <Button variant="success" disabled id="play">
-            Main
+            Baca Buku
           </Button>
         </Row>
       );
@@ -302,11 +299,8 @@ function Campus(props) {
           <Button variant="success" onClick={eat} id="eat">
             Makan
           </Button>
-          <Button variant="success" onClick={sleep} id="sleep">
-            Tidur
-          </Button>
           <Button variant="success" onClick={play} id="play">
-            Main
+            Baca Buku
           </Button>
         </Row>
       );

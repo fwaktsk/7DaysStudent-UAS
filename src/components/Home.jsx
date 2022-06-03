@@ -211,8 +211,18 @@ function Home(props) {
   function goToCafe() {
     if (time.h >= 9) {
       props.playMode("cafe");
+      document
+        .getElementsByTagName("BODY")[0]
+        .setAttribute(
+          "style",
+          "background-image: url('images/background/cafe.jpeg')");
     } else {
       alert("Cafe masih tutup tsay");
+      document
+        .getElementsByTagName("BODY")[0]
+        .setAttribute(
+          "style",
+          "background-image: url('images/background/cafe.jpeg')");
     }
   }
 
