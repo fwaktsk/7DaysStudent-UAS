@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: url("./images/background/Main\ Menu.png") no-repeat center center fixed;
+  background: url("./images/background/MainMenu.png") no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -207,8 +207,8 @@ body {
 
 .phone{
   width: 250px;
-  border: 1.5vh solid #111;
-  border-radius: 4.5vh;
+  border: 1.5vmin solid #111;
+  border-radius: 4.5vmin;
   background-color: #f0f0f0;
   color: #111;
   margin: auto;
@@ -228,10 +228,10 @@ body {
 }
 
 .phone .notch-container .notch {
-  width: 10vh;
-  height: 2.325vh;
+  width: 10vmin;
+  height: 2.225vmin;
   margin: 0 auto;
   background-color: #111;
-  border-bottom-left-radius: 2.334vh;
-  border-bottom-right-radius: 2.334vh;
+  border-bottom-left-radius: 2.334vmin;
+  border-bottom-right-radius: 2.334vmin;
 }
