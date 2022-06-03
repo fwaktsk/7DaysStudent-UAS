@@ -12,22 +12,22 @@ function Campus(props) {
   const mode = props.view;
   const news = props.news;
 
-  //function buat update status perinterval
+  //function buat update status perintervala
 
   function setMainBG() {
-    if (String(weather) === "Rain") {
-      var initbg =
-        "background-image: url('images/background/uni-lobby-day.jpeg')"; // Rain
-    } else if (time.h >= 6 && time.h <= 18) {
-      initbg = "background-image: url('images/background/uni-lobby-day.jpeg')"; // Pagi
-    } else if (time.h > 18 && time.h < 24) {
-      initbg =
-        "background-image: url('images/background/living-room-night.jpg')"; // Malam
-    } else if (time.h < 6) {
-      initbg =
-        "background-image: url('images/background/living-room-pastmidnight.jpg')"; // Tengah Malam
+    if(!(props.isBusy))
+    {
+      if (String(weather) === "Rain") {
+        var initbg =
+          "background-image: url('images/background/uni-lobby-rain.gif')"; // Rain
+      } else if (String(weather) === "Clouds") {
+        initbg = "background-image: url('images/background/uni-lobby-clouds.gif')"; // Pagi
+      } else {
+        initbg =
+          "background-image: url('images/background/uni-lobby-clear.jpg')"; // Malam
+      }
+      document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
     }
-    document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
   }
 
   //background changing
@@ -44,7 +44,7 @@ function Campus(props) {
   function eat() { //kantin
     var status = userData.status;
     if (status.hunger + 1 < 100) {
-      props.isBusy(true);
+      props.setBusy(true);
       var img = userData.avatar;
       var path = img.split("/");
       var index = path[2].split(".", 1);
@@ -68,101 +68,37 @@ function Campus(props) {
       //   setTimeout(function(){m += 30;},2500);
       setTimeout(function () {
         status.hunger += 5;
-        props.dataFetch({ ...userData, status: status });
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        time.m += 10;
+        props.fastForward({...time});
+        props.setBusy(false);
         setMainBG();
-        props.isBusy(false);
-        props.dataFetch({ ...userData, avatar: img });
-      }, 1000);
+      }, 3000);
     } else {
       alert(userData.name + " sudah kenyang. Nanti malah muntah");
     }
   }
 
-  function play() { // library baca buku
+  function read() { // library baca buku
     var status = userData.status;
     if (status.ent + 1 < 100) {
-      props.isBusy(true);
+      props.setBusy(true);
       var img = userData.avatar;
       var path = img.split("/");
       var index = path[2].split(".", 1);
-      if (time.h >= 7 && time.h <= 18) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/uni-library.jpeg')"
-          );
-        var newPath = "images/avatar/" + index + "-read.png";
-      } else if (time.h >= 19 || time.h <= 6) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/uni-library.jpeg')"
-          );
-        newPath = "images/avatar/" + index + "-play-night.gif";
-      }
+      document.getElementsByTagName("BODY")[0].setAttribute("style","background-image: url('images/background/uni-library.jpeg')");
+      var newPath = "images/avatar/" + index + "-read.gif";
       props.dataFetch({ ...userData, avatar: newPath });
-      //   setTimeout(function(){h += 1;},2500);
       setTimeout(function () {
         status.study += 3;
         status.ent += 3;
         status.rest -= 5;
         status.hunger -= 5;
-        props.dataFetch({ ...userData, status: status });
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        props.setBusy(false);
         setMainBG();
-        props.isBusy(false);
-        props.dataFetch({ ...userData, avatar: img });
-      }, 1000);
+      }, 3000);
     }
-  }
-
-  function learn() { //ikut kelas
-    props.isBusy(true);
-    var img = userData.avatar;
-    var path = img.split("/");
-    var index = path[2].split(".", 1);
-    var newPath = "images/avatar/" + index + "-study.gif";
-    props.dataFetch({ ...userData, avatar: newPath });
-    if (time.h >= 7 && time.h <= 18) {
-      document
-        .getElementsByTagName("BODY")[0]
-        .setAttribute(
-          "style",
-          "background-image: url('images/background/kelas_umn.jpeg')"
-        );
-    } else if (time.h >= 19 || time.h <= 6) {
-      document
-        .getElementsByTagName("BODY")[0]
-        .setAttribute(
-          "style",
-          "background-image: url('images/background/kelas_umn.jpeg')"
-        );
-    }
-    // if(study == 100)
-    // {
-    //   if(sem == 8)
-    //   {
-    //     gameOver();
-    //   }
-    //   document.getElementById("belajar").value = 0;
-    //   st /= 2;
-    //   sem += 1;
-    //   d = 0;
-    //   document.getElementById("semester").innerHTML = "Semester " + sem;
-    // }
-    // setTimeout(function(){h += 2;},2500);
-    setTimeout(function () {
-      var status = userData.status;
-      status.study += 10;
-      status.ent -= 10;
-      status.rest -= 5;
-      status.hunger -= 5;
-      props.dataFetch({ ...userData, status: status });
-      setMainBG();
-      props.isBusy(false);
-      props.dataFetch({ ...userData, avatar: img });
-    }, 1000);
   }
 
   function goToHome() {
@@ -241,13 +177,10 @@ function Campus(props) {
         <Row>
           {/* Actions TEST*/}
           <p>Activities</p>
-          <Button variant="success" disabled id="study">
-            Ikut Kelas
-          </Button>
           <Button variant="success" disabled id="eat">
             Makan
           </Button>
-          <Button variant="success" disabled id="play">
+          <Button variant="success" disabled id="read">
             Baca Buku
           </Button>
         </Row>
@@ -257,13 +190,10 @@ function Campus(props) {
         <Row>
           {/* Actions TEST*/}
           <p>Activities</p>
-          <Button variant="success" onClick={learn} id="study">
-            Ikut Kelas
-          </Button>
           <Button variant="success" onClick={eat} id="eat">
             Makan
           </Button>
-          <Button variant="success" onClick={play} id="play">
+          <Button variant="success" onClick={read} id="read">
             Baca Buku
           </Button>
         </Row>
@@ -271,6 +201,356 @@ function Campus(props) {
     }
   }
 
+  function ikutKelas1()
+  {
+    var status = userData.status;
+    if(status.study <= 100)
+    {
+      props.setBusy(true);
+      var img = userData.avatar;
+      var path = img.split("/");
+      var index = path[2].split(".", 1);
+      var newPath = "images/avatar/" + index + "-study.gif";
+      props.dataFetch({ ...userData, avatar: newPath });
+      document.getElementsByTagName("BODY")[0].setAttribute("style","background-image: url('images/background/uni-class.jpeg')");
+      setTimeout(function () {
+        status.study += 18;
+        status.ent -= 20;
+        status.rest -= 20;
+        status.hunger -= 20;
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        var matkul = props.matcool[0];
+        matkul.learnt = true;
+        props.joinClass({...props.matcool, matkul});
+        time.h += 3;
+        time.m += 3;
+        props.fastForward({...time});
+        props.setBusy(false);
+        setMainBG();
+      }, 3000);
+    }
+  }
+
+  function ikutKelas2()
+  {
+    var status = userData.status;
+    if(status.study <= 100)
+    {
+      props.setBusy(true);
+      var img = userData.avatar;
+      var path = img.split("/");
+      var index = path[2].split(".", 1);
+      var newPath = "images/avatar/" + index + "-study.gif";
+      props.dataFetch({ ...userData, avatar: newPath });
+      document.getElementsByTagName("BODY")[0].setAttribute("style","background-image: url('images/background/uni-class.jpeg')");
+      setTimeout(function () {
+        status.study += 18;
+        status.ent -= 20;
+        status.rest -= 20;
+        status.hunger -= 20;
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        var matkul = props.matcool[1];
+        matkul.learnt = true;
+        props.joinClass({...props.matcool, matkul});
+        time.h += 3;
+        time.m += 3;
+        props.fastForward({...time});
+        props.setBusy(false);
+        setMainBG();
+      }, 3000);
+    }
+  }
+
+  function ikutKelas3()
+  {
+    var status = userData.status;
+    if(status.study <= 100)
+    {
+      props.setBusy(true);
+      var img = userData.avatar;
+      var path = img.split("/");
+      var index = path[2].split(".", 1);
+      var newPath = "images/avatar/" + index + "-study.gif";
+      props.dataFetch({ ...userData, avatar: newPath });
+      document.getElementsByTagName("BODY")[0].setAttribute("style","background-image: url('images/background/uni-class.jpeg')");
+      setTimeout(function () {
+        status.study += 12;
+        status.ent -= 20;
+        status.rest -= 20;
+        status.hunger -= 20;
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        var matkul = props.matcool[2];
+        matkul.learnt = true;
+        props.joinClass({...props.matcool, matkul});
+        time.h += 2;
+        time.m += 3;
+        props.fastForward({...time});
+        props.setBusy(false);
+        setMainBG();
+      }, 3000);
+    }
+  }
+
+  function ikutKelas4()
+  {
+    var status = userData.status;
+    if(status.study <= 100)
+    {
+      props.setBusy(true);
+      var img = userData.avatar;
+      var path = img.split("/");
+      var index = path[2].split(".", 1);
+      var newPath = "images/avatar/" + index + "-study.gif";
+      props.dataFetch({ ...userData, avatar: newPath });
+      document.getElementsByTagName("BODY")[0].setAttribute("style","background-image: url('images/background/uni-class.jpeg')");
+      setTimeout(function () {
+        status.study += 12;
+        status.ent -= 20;
+        status.rest -= 20;
+        status.hunger -= 20;
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        var matkul = props.matcool[3];
+        matkul.learnt = true;
+        props.joinClass({...props.matcool, matkul});
+        time.h += 2;
+        time.m += 3;
+        props.fastForward({...time});
+        props.setBusy(false);
+        setMainBG();
+      }, 3000);
+    }
+  }
+
+  function ikutKelas5()
+  {
+    var status = userData.status;
+    if(status.study <= 100)
+    {
+      props.setBusy(true);
+      var img = userData.avatar;
+      var path = img.split("/");
+      var index = path[2].split(".", 1);
+      var newPath = "images/avatar/" + index + "-study.gif";
+      props.dataFetch({ ...userData, avatar: newPath });
+      document.getElementsByTagName("BODY")[0].setAttribute("style","background-image: url('images/background/uni-class.jpeg')");
+      setTimeout(function () {
+        status.study += 12;
+        status.ent -= 20;
+        status.rest -= 20;
+        status.hunger -= 20;
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        var matkul = props.matcool[4];
+        matkul.learnt = true;
+        props.joinClass({...props.matcool, matkul});
+        time.h += 2;
+        time.m += 3;
+        props.fastForward({...time});
+        props.setBusy(false);
+        setMainBG();
+      }, 3000);
+    }
+  }
+
+  function ikutKelas6()
+  {
+    var status = userData.status;
+    if(status.study <= 100)
+    {
+      props.setBusy(true);
+      var img = userData.avatar;
+      var path = img.split("/");
+      var index = path[2].split(".", 1);
+      var newPath = "images/avatar/" + index + "-study.gif";
+      props.dataFetch({ ...userData, avatar: newPath });
+      document.getElementsByTagName("BODY")[0].setAttribute("style","background-image: url('images/background/uni-class.jpeg')");
+      setTimeout(function () {
+        status.study += 12;
+        status.ent -= 20;
+        status.rest -= 20;
+        status.hunger -= 20;
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        var matkul = props.matcool[5];
+        matkul.learnt = true;
+        props.joinClass({...props.matcool, matkul});
+        time.h += 2;
+        time.m += 3;
+        props.fastForward({...time});
+        props.setBusy(false);
+        setMainBG();
+      }, 3000);
+    }
+  }
+
+  function ikutKelas7()
+  {
+    var status = userData.status;
+    if(status.study <= 100)
+    {
+      props.setBusy(true);
+      var img = userData.avatar;
+      var path = img.split("/");
+      var index = path[2].split(".", 1);
+      var newPath = "images/avatar/" + index + "-study.gif";
+      props.dataFetch({ ...userData, avatar: newPath });
+      document.getElementsByTagName("BODY")[0].setAttribute("style","background-image: url('images/background/uni-class.jpeg')");
+      setTimeout(function () {
+        status.study += 12;
+        status.ent -= 20;
+        status.rest -= 20;
+        status.hunger -= 20;
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        var matkul = props.matcool[6];
+        matkul.learnt = true;
+        props.joinClass({...props.matcool, matkul});
+        time.h += 3;
+        time.m += 3;
+        props.fastForward({...time});
+        props.setBusy(false);
+        setMainBG();
+      }, 3000);
+    }
+  }
+
+  function Lesson1() {
+    if (props.matcool[0].learnt || props.isBusy) {
+      return (
+        <Row>
+          <Button variant="success" disabled>
+            Ikut Kelas {props.matcool[0].nama_matkul}
+          </Button>
+        </Row>
+      );
+    } else {
+      return (
+        <Row>
+          <Button variant="success" onClick={ikutKelas1}>
+            Ikut Kelas {props.matcool[0].nama_matkul}
+          </Button>
+        </Row>
+      );
+    }
+  }
+
+  function Lesson2() {
+    if (props.matcool[1].learnt || props.isBusy) {
+      return (
+        <Row>
+          <Button variant="success" disabled>
+            Ikut Kelas {props.matcool[1].nama_matkul}
+          </Button>
+        </Row>
+      );
+    } else {
+      return (
+        <Row>
+          <Button variant="success" onClick={ikutKelas2}>
+            Ikut Kelas {props.matcool[1].nama_matkul}
+          </Button>
+        </Row>
+      );
+    }
+  }
+
+  function Lesson3() {
+    if (props.matcool[2].learnt || props.isBusy) {
+      return (
+        <Row>
+          <Button variant="success" disabled>
+            Ikut Kelas {props.matcool[2].nama_matkul}
+          </Button>
+        </Row>
+      );
+    } else {
+      return (
+        <Row>
+          <Button variant="success" onClick={ikutKelas3}>
+            Ikut Kelas {props.matcool[2].nama_matkul}
+          </Button>
+        </Row>
+      );
+    }
+  }
+
+  function Lesson4() {
+    if (props.matcool[3].learnt || props.isBusy) {
+      return (
+        <Row>
+          <Button variant="success" disabled>
+            Ikut Kelas {props.matcool[3].nama_matkul}
+          </Button>
+        </Row>
+      );
+    } else {
+      return (
+        <Row>
+          <Button variant="success" onClick={ikutKelas4}>
+            Ikut Kelas {props.matcool[3].nama_matkul}
+          </Button>
+        </Row>
+      );
+    }
+  }
+
+  function Lesson5() {
+    if (props.matcool[4].learnt || props.isBusy) {
+      return (
+        <Row>
+          <Button variant="success" disabled>
+            Ikut Kelas {props.matcool[4].nama_matkul}
+          </Button>
+        </Row>
+      );
+    } else {
+      return (
+        <Row>
+          <Button variant="success" onClick={ikutKelas5}>
+            Ikut Kelas {props.matcool[4].nama_matkul}
+          </Button>
+        </Row>
+      );
+    }
+  }
+
+  function Lesson6() {
+    if (props.matcool[5].learnt || props.isBusy) {
+      return (
+        <Row>
+          <Button variant="success" disabled>
+            Ikut Kelas {props.matcool[5].nama_matkul}
+          </Button>
+        </Row>
+      );
+    } else {
+      return (
+        <Row>
+          <Button variant="success" onClick={ikutKelas6}>
+            Ikut Kelas {props.matcool[5].nama_matkul}
+          </Button>
+        </Row>
+      );
+    }
+  }
+
+  function Lesson7() {
+    if (props.matcool[6].learnt || props.isBusy) {
+      return (
+        <Row>
+          <Button variant="success" disabled>
+            Ikut Kelas {props.matcool[6].nama_matkul}
+          </Button>
+        </Row>
+      );
+    } else {
+      return (
+        <Row>
+          <Button variant="success" onClick={ikutKelas7}>
+            Ikut Kelas {props.matcool[6].nama_matkul}
+          </Button>
+        </Row>
+      );
+    }
+  }
+  
   function Phone()
   {
     return (<Col>
@@ -364,6 +644,13 @@ function Campus(props) {
           <GoTo />
           <br />
           <Business />
+          <Lesson1 />
+          <Lesson2 />
+          <Lesson3 />
+          <Lesson4 />
+          <Lesson5 />
+          <Lesson6 />
+          <Lesson7 />
         </Col>
       </Row>
     </div>

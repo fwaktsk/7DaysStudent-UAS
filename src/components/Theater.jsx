@@ -12,22 +12,14 @@ function Theater(props) {
   const mode = props.view;
   const news = props.news;
 
-  //function buat update status perinterval
+  //function buat update status perintervala
 
   function setMainBG() {
-    if (String(weather) === "Rain") {
-      var initbg =
-        "background-image: url('images/background/cgv.jpg')"; // Rain but not really
-    } else if (time.h >= 6 && time.h <= 18) {
-      initbg = "background-image: url('images/background/cgv.jpg')"; // Pagi
-    } else if (time.h > 18 && time.h < 24) {
-      initbg =
-        "background-image: url('images/background/cgv.jpg')"; // Malam
-    } else if (time.h < 6) {
-      initbg =
-        "background-image: url('images/background/cgv.jpg')"; // Tengah Malam
-    }
-    document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
+    if(!props.isBusy)
+    {
+      var initbg = "background-image: url('images/background/cgv.jpg')";
+      document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
+    }    
   }
 
   //background changing
@@ -44,38 +36,24 @@ function Theater(props) {
   function watch() {
     var status = userData.status;
     if (status.ent + 1 < 100) {
-      props.isBusy(true);
+      props.setBusy(true);
       var img = userData.avatar;
       var path = img.split("/");
       var index = path[2].split(".", 1);
-      if (time.h >= 7 && time.h <= 18) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/play-day.jpg')"
-          );
-        var newPath = "images/avatar/" + index + "-play-day.gif";
-      } else if (time.h >= 19 || time.h <= 6) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/play-night.jpg')"
-          );
-        newPath = "images/avatar/" + index + "-play-night.gif";
-      }
+      var newPath = "images/avatar/" + index + "-play-day.gif";
+      document.getElementsByTagName("BODY")[0].setAttribute("style","background-image: url('images/background/cgv.gif')");
       props.dataFetch({ ...userData, avatar: newPath });
-      //   setTimeout(function(){h += 1;},2500);
       setTimeout(function () {
         status.ent += 9;
-        status.rest -= 5;
-        status.hunger -= 10;
-        props.dataFetch({ ...userData, status: status });
+        status.rest -= 10;
+        status.hunger -= 5;
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        time.h += 4;
+        time.m += 3;
+        props.fastForward({...time});
+        props.setBusy(false);
         setMainBG();
-        props.isBusy(false);
-        props.dataFetch({ ...userData, avatar: img });
-      }, 1000);
+      }, 5000);
     }
   }
 

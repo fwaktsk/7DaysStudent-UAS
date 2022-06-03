@@ -11,7 +11,7 @@ const members = [
       id: 2,
       name: "Meitio Susanto, S. J. W.",
       imgURL:
-        "https://pbs.twimg.com/profile_images/625247595825246208/X3XLea04_400x400.jpg",
+        "images/about/tio.gif",
       nim: "00000044843",
       email: "meitio.susanto@student.umn.ac.id"
     },

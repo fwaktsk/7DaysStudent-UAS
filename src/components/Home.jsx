@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -15,19 +15,36 @@ function Home(props) {
   //function buat update status perinterval
 
   function setMainBG() {
-    if (String(weather) === "Rain") {
-      var initbg =
-        "background-image: url('images/background/living-room-dayrain.jpg')"; // Rain
-    } else if (time.h >= 6 && time.h <= 18) {
-      initbg = "background-image: url('images/background/living-room-day.jpg')"; // Pagi
-    } else if (time.h > 18 && time.h < 24) {
-      initbg =
-        "background-image: url('images/background/living-room-night.jpg')"; // Malam
-    } else if (time.h < 6) {
-      initbg =
-        "background-image: url('images/background/living-room-pastmidnight.jpg')"; // Tengah Malam
+    if(!props.isBusy)
+    {
+      if (String(weather) === "Rain") 
+      {
+        if (time.h >= 6 && time.h <= 18)
+        {
+          var initbg =
+          "background-image: url('images/background/living-room-dayrain.gif')"; // Rain
+        }
+        else
+        {
+          initbg = "background-image: url('images/background/living-room-nightrain.gif')"; // Rain
+        }
+      }
+      else
+      {
+        if (time.h >= 6 && time.h <= 18) {
+          initbg = "background-image: url('images/background/living-room-day.jpg')"; // Pagi
+        }
+        else if (time.h > 18 && time.h < 24) {
+          initbg =
+            "background-image: url('images/background/living-room-night.jpg')"; // Malam
+        }
+        else if (time.h < 6) {
+          initbg =
+            "background-image: url('images/background/living-room-pastmidnight.jpg')"; // Tengah Malam
+        }
+      }
+      document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
     }
-    document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
   }
 
   //background changing
@@ -44,44 +61,49 @@ function Home(props) {
   function eat() {
     var status = userData.status;
     if (status.hunger + 1 < 100) {
-      props.isBusy(true);
+      props.setBusy(true);
       var img = userData.avatar;
       var path = img.split("/");
       var index = path[2].split(".", 1);
       var newPath = "images/avatar/" + index + "-eat.gif";
       props.dataFetch({ ...userData, avatar: newPath });
-      if (time.h >= 7 && time.h <= 18) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/kitchen-day.jpg')"
-          );
-      } else if (time.h >= 19 || time.h <= 6) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/kitchen-night.jpg')"
-          );
+      if (String(weather) === "Rain") 
+      {
+        if (time.h >= 6 && time.h <= 18)
+        {
+          document.getElementsByTagName("BODY")[0].setAttribute("style", "background-image: url('images/background/kitchen-day-rain.gif')"); // Rain
+        }
+        else
+        {
+          document.getElementsByTagName("BODY")[0].setAttribute("style", "background-image: url('images/background/kitchen-night-rain.gif')"); // Rain
+        }
       }
-      //   setTimeout(function(){m += 30;},2500);
+      else
+      {
+        if (time.h >= 6 && time.h <= 18) {
+          document.getElementsByTagName("BODY")[0].setAttribute("style", "background-image: url('images/background/kitchen-day.jpg')"); // Pagi
+        }
+        else {
+          document.getElementsByTagName("BODY")[0].setAttribute("style", "background-image: url('images/background/kitchen-night.jpg')");// Malam
+        }
+      }
       setTimeout(function () {
-        status.hunger += 5;
-        props.dataFetch({ ...userData, status: status });
+        status.hunger += 10;
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        time.m += 10;
+        props.fastForward({...time});
+        props.setBusy(false);
         setMainBG();
-        props.isBusy(false);
-        props.dataFetch({ ...userData, avatar: img });
-      }, 1000);
+      }, 3000);
     } else {
-      alert(userData.name + " sudah kenyang. Nanti malah muntah");
+      alert(userData.name + " Makan terooooss");
     }
   }
 
   function sleep() {
     var status = userData.status;
     if (status.rest + 1 < 100) {
-      props.isBusy(true);
+      props.setBusy(true);
       var img = userData.avatar;
       var path = img.split("/");
       var index = path[2].split(".", 1);
@@ -102,22 +124,27 @@ function Home(props) {
             "background-image: url('images/background/bed-night.jpg')"
           );
       }
-      //   setTimeout(function(){h += 3;},2500);
+      //   setTimeout(function(){},2500);
       setTimeout(function () {
         status.rest += 7;
-        status.hunger -= 5;
-        props.dataFetch({ ...userData, status: status });
+        status.hunger -= 2;
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        time.h += 3;
+        time.m += Math.floor(Math.random()*10);
+        props.fastForward({...time});
+        props.setBusy(false);
         setMainBG();
-        props.isBusy(false);
-        props.dataFetch({ ...userData, avatar: img });
-      }, 1000);
+      }, 3000);
+    } else {
+      alert(userData.name + " Tidur terooossss.");
     }
   }
 
   function play() {
     var status = userData.status;
-    if (status.ent + 1 < 100) {
-      props.isBusy(true);
+    if (status.ent + 1 < 100) 
+    {
+      props.setBusy(true);
       var img = userData.avatar;
       var path = img.split("/");
       var index = path[2].split(".", 1);
@@ -139,21 +166,24 @@ function Home(props) {
         newPath = "images/avatar/" + index + "-play-night.gif";
       }
       props.dataFetch({ ...userData, avatar: newPath });
-      //   setTimeout(function(){h += 1;},2500);
       setTimeout(function () {
         status.ent += 9;
-        status.rest -= 5;
-        status.hunger -= 10;
-        props.dataFetch({ ...userData, status: status });
+        status.rest -= 2;
+        status.hunger -= 5;
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        props.setBusy(false);
         setMainBG();
-        props.isBusy(false);
-        props.dataFetch({ ...userData, avatar: img });
-      }, 1000);
+      }, 3000);
+    } else {
+      alert(userData.name + " main game mulu. Belajar sana");
     }
   }
 
   function learn() {
-    props.isBusy(true);
+    var status = userData.status;
+    if(status.study <= 100)
+    {
+      props.setBusy(true);
     var img = userData.avatar;
     var path = img.split("/");
     var index = path[2].split(".", 1);
@@ -173,31 +203,20 @@ function Home(props) {
           "style",
           "background-image: url('images/background/study-night.jpg')"
         );
-    }
-    // if(study == 100)
-    // {
-    //   if(sem == 8)
-    //   {
-    //     gameOver();
-    //   }
-    //   document.getElementById("belajar").value = 0;
-    //   st /= 2;
-    //   sem += 1;
-    //   d = 0;
-    //   document.getElementById("semester").innerHTML = "Semester " + sem;
-    // }
-    // setTimeout(function(){h += 2;},2500);
+      }
     setTimeout(function () {
-      var status = userData.status;
-      status.study += 5;
+      status.study += 2;
       status.ent -= 5;
       status.rest -= 5;
       status.hunger -= 5;
-      props.dataFetch({ ...userData, status: status });
+      props.dataFetch({ ...userData, avatar: img, status: status });
+      props.setBusy(false);
       setMainBG();
-      props.isBusy(false);
-      props.dataFetch({ ...userData, avatar: img });
-    }, 1000);
+    }, 3000);
+    }
+    else {
+      alert(userData.name + " Belajar nya udah mantap. Jangan lupa ikut kelas :)");
+    }
   }
 
   function goToCampus() {

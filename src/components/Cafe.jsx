@@ -12,22 +12,14 @@ function Cafe(props) {
   const mode = props.view;
   const news = props.news;
 
-  //function buat update status perinterval
+  //function buat update status perintervala
 
   function setMainBG() {
-    if (String(weather) === "Rain") {
-      var initbg =
-        "background-image: url('images/background/cafe.jpeg')"; // Rain
-    } else if (time.h >= 6 && time.h <= 18) {
-      initbg = "background-image: url('images/background/cafe.jpeg')"; // Pagi
-    } else if (time.h > 18 && time.h < 24) {
-      initbg =
-        "background-image: url('images/background/cafe.jpeg')"; // Malam
-    } else if (time.h < 6) {
-      initbg =
-        "background-image: url('images/background/cafe.jpeg')"; // Tengah Malam
+    if(!props.isBusy)
+    {
+      var initbg = "background-image: url('images/background/cafe.jpeg')"; // Rain
+      document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
     }
-    document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
   }
 
   //background changing
@@ -44,35 +36,18 @@ function Cafe(props) {
   function eat() {
     var status = userData.status;
     if (status.hunger + 1 < 100) {
-      props.isBusy(true);
+      props.setBusy(true);
       var img = userData.avatar;
       var path = img.split("/");
       var index = path[2].split(".", 1);
       var newPath = "images/avatar/" + index + "-eat.gif";
       props.dataFetch({ ...userData, avatar: newPath });
-      if (time.h >= 7 && time.h <= 18) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/cafe.jpeg')"
-          );
-      } else if (time.h >= 19 || time.h <= 6) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/cafe.jpeg')"
-          );
-      }
-      //   setTimeout(function(){m += 30;},2500);
       setTimeout(function () {
         status.hunger += 5;
-        props.dataFetch({ ...userData, status: status });
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        props.setBusy(false);
         setMainBG();
-        props.isBusy(false);
-        props.dataFetch({ ...userData, avatar: img });
-      }, 1000);
+      }, 3000);
     } else {
       alert(userData.name + " sudah kenyang. Nanti malah muntah");
     }
@@ -81,78 +56,43 @@ function Cafe(props) {
   function drink() {
     var status = userData.status;
     if (status.hunger + 1 < 100) {
-      props.isBusy(true);
+      props.setBusy(true);
       var img = userData.avatar;
       var path = img.split("/");
       var index = path[2].split(".", 1);
-      var newPath = "images/avatar/" + index + "-eat.gif";
+      var newPath = "images/avatar/" + index + "-drink.gif";
       props.dataFetch({ ...userData, avatar: newPath });
-      if (time.h >= 7 && time.h <= 18) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/kitchen-day.jpg')"
-          );
-      } else if (time.h >= 19 || time.h <= 6) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/kitchen-night.jpg')"
-          );
-      }
-      //   setTimeout(function(){m += 30;},2500);
       setTimeout(function () {
         status.hunger += 3;
-        props.dataFetch({ ...userData, status: status });
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        props.setBusy(false);
         setMainBG();
-        props.isBusy(false);
-        props.dataFetch({ ...userData, avatar: img });
-      }, 1000);
+      }, 3000);
     } else {
-      alert(userData.name + " sudah kenyang. Nanti malah muntah");
+      alert(userData.name + " sudah kembung");
     }
   }
 
-  function play() {
+  function watch() {
     var status = userData.status;
     if (status.ent + 1 < 100) {
-      props.isBusy(true);
+      props.setBusy(true);
       var img = userData.avatar;
       var path = img.split("/");
       var index = path[2].split(".", 1);
-      if (time.h >= 7 && time.h <= 18) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/cafe.jpeg')"
-          );
-        var newPath = "images/avatar/" + index + "-play-day.gif";
-      } else if (time.h >= 19 || time.h <= 6) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/cafe.jpeg')"
-          );
-        newPath = "images/avatar/" + index + "-play-night.gif";
-      }
+      var newPath = "images/avatar/" + index + "-play-day.gif";
       props.dataFetch({ ...userData, avatar: newPath });
-      //   setTimeout(function(){h += 1;},2500);
       setTimeout(function () {
         status.ent += 9;
         status.rest -= 5;
         status.hunger -= 10;
-        props.dataFetch({ ...userData, status: status });
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        props.setBusy(false);
         setMainBG();
-        props.isBusy(false);
-        props.dataFetch({ ...userData, avatar: img });
-      }, 1000);
+      }, 3000);
     }
   }
-//s
+
   function goToHome() {
     props.playMode("home");
   }
@@ -232,10 +172,10 @@ function Cafe(props) {
           <Button variant="success" disabled id="eat">
             Makan
           </Button>
-          <Button variant="success" disabled id="sleep">
+          <Button variant="success" disabled id="drink">
             Minum
           </Button>
-          <Button variant="success" disabled id="play">
+          <Button variant="success" disabled id="watch">
             Nonton
           </Button>
         </Row>
@@ -248,10 +188,10 @@ function Cafe(props) {
           <Button variant="success" onClick={eat} id="eat">
             Makan
           </Button>
-          <Button variant="success" onClick={drink} id="play">
+          <Button variant="success" onClick={drink} id="drink">
             Minum
           </Button>
-          <Button variant="success" onClick={play} id="play">
+          <Button variant="success" onClick={watch} id="watch">
             Nonton
           </Button>
         </Row>

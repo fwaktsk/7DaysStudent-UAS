@@ -5,8 +5,9 @@ import Home from "./components/Home";
 import Campus from "./components/Campus";
 import Cafe from "./components/Cafe";
 import Park from "./components/Park";
-import Theater from "./components/Theater.jsx";
+import Theater from "./components/Theater";
 import AboutUs from "./components/AboutUs";
+import GameOver from "./components/GameOver";
 
 function App(props) {
   const [view, setView] = useState("setup");
@@ -17,7 +18,7 @@ function App(props) {
     status: { hunger: 75, ent: 75, rest: 75, study: 0 },
   });
   const [acts, setActs] = useState(false);
-  const [time, setTime] = useState();
+  const [time, setTime] = useState({ d: 0, h: 0, m: 0 });
   const [greet, setGreet] = useState("");
   const [weather, setWeather] = useState("");
   const [weatherData, setWeatherData] = useState();
@@ -25,6 +26,7 @@ function App(props) {
   const [newsData, setNewsData] = useState();
   const [newsIdx, setNewsIdx] = useState(0);
   const [weatherIdx, setWeatherIdx] = useState(0);
+  const [lessons, setLessons] = useState();
   const urlWeather =
     "http://api.openweathermap.org/data/2.5/forecast?lat=-6.256098&lon=106.618947&appid=7ca07ae2937263bad45b68abf9522fe3";
   const urlNews =
@@ -45,6 +47,11 @@ function App(props) {
   const updateTime = (time) => {
     setTime(time);
   };
+
+  const updateLesson = (bundle) =>{
+    setLessons(bundle);
+  };
+
   const updateWeather = () => {
     setWeatherIdx(weatherIdx + 1);
     setWeather(weatherData[weatherIdx].weather[0].main);
@@ -52,8 +59,6 @@ function App(props) {
 
   const updateNews = () => {
     setNewsIdx(Math.floor(Math.random() * 19));
-    // console.log(newsIdx);
-    // console.log(news);
     const pickedNews = newsData[newsIdx];
     setNews({
         author: pickedNews.author,
@@ -72,12 +77,46 @@ function App(props) {
     fetch(urlNews)
       .then((response) => response.json())
       .then((data) => setNewsData(data.articles))
-      // .then(console.log(newsData));
   }, []);
 
   useEffect(() => {
     const clock = setInterval(function () {
       if (view !== "setup" && view !== "credits" && view !== "gameOver") {
+
+        if (userData.status.hunger <= 0 || userData.status.ent <= 0 || userData.status.rest <= 0) {
+          if (userData.status.hunger <= 0)
+          {
+            alert("GAME OVER... " + userData.name + " meninggal akibat tidak dapat mendapat bansos untuk makan :(((");
+            var img = document.getElementById("avatar");
+            var e = img.getAttribute("src");
+            var path = e.split("/");
+            var index = path[2].split(".", 1);
+            var newPath = "images/avatar/" + index + "-starve.png";
+            setUserData({ ...userData, avatar: newPath });
+          }
+          else if (userData.status.ent <= 0)
+          {
+            alert("GAME OVER... " + userData.name + " meninggal akibat tidak dapat mendapat bansos untuk makan :(((");
+            img = document.getElementById("avatar");
+            e = img.getAttribute("src");
+            path = e.split("/");
+            index = path[2].split(".", 1);
+            newPath = "images/avatar/" + index + "-stress.png";
+            setUserData({ ...userData, avatar: newPath });
+          }
+          else if (userData.status.rest <= 0)
+          {
+            alert("GAME OVER... " + userData.name + " mati terkena geger otak karena kelelahan :(((");
+            img = document.getElementById("avatar");
+            e = img.getAttribute("src");
+            path = e.split("/");
+            index = path[2].split(".", 1);
+            newPath = "images/avatar/" + index + "-tired.png";
+            setUserData({ ...userData, avatar: newPath });
+          }
+          setView("gameOver");
+          }
+
         var m = time.m + 1;
         var h = time.h;
         var d = time.d;
@@ -123,13 +162,36 @@ function App(props) {
         }
 
         if (time.d === 7) {
+          var completion = 0
+          for (let i = 0; i < 7; i++) {
+            if(lessons[i].learnt)
+            {
+              completion += 1;
+            }
+            
+          }
+          if(completion === 7 && userData.status.study >= 100)
+          {
+            alert("You did well! Kayaknya jadi mahasiswa " + userData.major + " sesuai sama potensimu, jadi dosen yuk");
+          }
+          else if(completion === 7 && userData.status.study <= 100)
+          {
+            alert("Kamu radjin deh bisa ikut semua pelajaran, tapi jangan lupa belajar lagi diluar kelas biar bisa ngikutin");
+          }else if (completion < 7 && completion > 3 && userData.status.study >= 100)
+          {
+            alert("Kamu belajar banyak tapi ga terkait ama kuliahnya");
+          }else if (completion < 7 && completion > 3 && userData.status.study <= 100)
+          {
+            alert("B ajah bambank");
+          }else if(completion <= 3)
+          {
+            alert("Baru minggu pertama loh, WOE! Belajar lagi kids");
+            newPath = "images/avatar/mood.png";
+            setUserData({ ...userData, avatar: newPath });
+          }
+          
           setView("gameOver");
-          document
-            .getElementsByTagName("BODY")[0]
-            .setAttribute(
-              "style",
-              "background-image: url('images/background/adios.png')"
-            );
+          document.getElementsByTagName("BODY")[0].setAttribute("style","background-image: url('images/background/adios.png')");
         }
       }
     }, 1000);
@@ -148,6 +210,7 @@ function App(props) {
           timeStart={updateTime}
           getWeather={updateWeather}
           getNews={updateNews}
+          defineLesson={updateLesson}
         />
       );
     } else if (view === "home") {
@@ -160,9 +223,11 @@ function App(props) {
           view={view}
           weather={weather}
           news = {news}
+          isBusy = {acts}
           playMode={updateMode}
           dataFetch={playerSetup}
-          isBusy={disableButton}
+          setBusy={disableButton}
+          fastForward={updateTime}
           changeWeather={updateWeather}
         />
       );
@@ -176,10 +241,14 @@ function App(props) {
           view={view}
           weather={weather}
           news = {news}
+          isBusy = {acts}
+          matcool = {lessons}
           playMode={updateMode}
           dataFetch={playerSetup}
-          isBusy={disableButton}
+          setBusy={disableButton}
+          fastForward={updateTime}
           changeWeather={updateWeather}
+          joinClass={updateLesson}
         />
       );
     } else if (view === "cafe") {
@@ -192,9 +261,10 @@ function App(props) {
           view={view}
           weather={weather}
           news = {news}
+          isBusy = {acts}
           playMode={updateMode}
           dataFetch={playerSetup}
-          isBusy={disableButton}
+          setBusy={disableButton}
           changeWeather={updateWeather}
         />
       );
@@ -208,9 +278,11 @@ function App(props) {
           view={view}
           weather={weather}
           news = {news}
+          isBusy = {acts}
           playMode={updateMode}
           dataFetch={playerSetup}
-          isBusy={disableButton}
+          fastForward={updateTime}
+          setBusy={disableButton}
           changeWeather={updateWeather}
         />
       );
@@ -224,20 +296,31 @@ function App(props) {
           view={view}
           weather={weather}
           news = {news}
+          isBusy = {acts}
           playMode={updateMode}
           dataFetch={playerSetup}
-          isBusy={disableButton}
+          fastForward={updateTime}
+          setBusy={disableButton}
           changeWeather={updateWeather}
         />
       );
-    } else if (view === "credits") {
+    } else if (view === "gameOver")
+    {
+      return <GameOver avatar={userData.avatar}
+                      playMode={updateMode}
+                      day = {time.d}/>
+    }else if (view === "credits") {
       return <AboutUs playMode={updateMode} />;
     }
   }
 
   return (
     <div id="App">
-      <Banner />
+      <Banner 
+          view={view}
+          weather={weather}
+          clock={time}
+          />
       <ViewMode />
     </div>
   );

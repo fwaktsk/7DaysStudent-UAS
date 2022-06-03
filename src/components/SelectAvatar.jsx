@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
+import lesson from "../db/lesson";
 
 function SelectAvatar(props) {
   const [avatar, setAvatar] = useState("images/avatar/1.png");
@@ -15,9 +16,29 @@ function SelectAvatar(props) {
         major: major,
         status: { hunger: 75, ent: 75, rest: 75, study: 0 },
       });
+      if(major === "Informatika")
+      {
+        props.defineLesson(lesson[0]);
+      }
+      if(major === "Sistem Informasi")
+      {
+        props.defineLesson(lesson[1]);
+      }
+      if(major === "Teknik Komputer")
+      {
+        props.defineLesson(lesson[2]);
+      }
+      if(major === "Teknik Elektro")
+      {
+        props.defineLesson(lesson[3]);
+      }
+      if (major === "Teknik Fisika")
+      {
+        props.defineLesson(lesson[4]);
+      }
       props.getWeather();
       props.getNews();
-      props.timeStart({ d: 1, h: 9, m: 0 });
+      props.timeStart({ d: 0, h: 0, m: 0 });
       const initbg =
         "background-image: url('images/background/living-room-pastmidnight.jpg')";
       document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);

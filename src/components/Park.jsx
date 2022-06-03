@@ -12,28 +12,28 @@ function Park(props) {
   const mode = props.view;
   const news = props.news;
 
-  //function buat update status perinterval
+  //function buat update status perintervala
 
   function setMainBG() {
-    if (String(weather) === "Rain") {
-      var initbg =
-        "background-image: url('images/background/dufan.png')"; // Rain
-    } else if (time.h >= 6 && time.h <= 18) {
-      initbg = "background-image: url('images/background/dufan.png')"; // Pagi
-    } else if (time.h > 18 && time.h < 24) {
-      initbg =
-        "background-image: url('images/background/living-room-night.jpg')"; // Malam
-    } else if (time.h < 6) {
-      initbg =
-        "background-image: url('images/background/living-room-pastmidnight.jpg')"; // Tengah Malam
+    if(!props.isBusy)
+    {
+      if (String(weather) === "Rain") {
+        var initbg = "background-image: url('images/background/dufan-rain.gif')"; // Rain
+      } else {
+        initbg = "background-image: url('images/background/dufan-clear.jpg')"; // Clouds or Clear
+      }
+      document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
     }
-    document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);
   }
 
   //background changing
   useEffect(() => {
     const bg = setInterval(() => {
       setMainBG();
+      if(String(weather) === "Rain")
+      {
+        props.playMode("home");
+      }
     }, 1000);
 
     return () => {
@@ -41,115 +41,27 @@ function Park(props) {
     };
   }, [time]);
 
-  function eat() {
-    var status = userData.status;
-    if (status.hunger + 1 < 100) {
-      props.isBusy(true);
-      var img = userData.avatar;
-      var path = img.split("/");
-      var index = path[2].split(".", 1);
-      var newPath = "images/avatar/" + index + "-play-day.gif";
-      props.dataFetch({ ...userData, avatar: newPath });
-      if (time.h >= 7 && time.h <= 18) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/dufan.jpg')"
-          );
-      } else if (time.h >= 19 || time.h <= 6) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/kitchen-night.jpg')"
-          );
-      }
-      //   setTimeout(function(){m += 30;},2500);
-      setTimeout(function () {
-        status.hunger += 5;
-        props.dataFetch({ ...userData, status: status });
-        setMainBG();
-        props.isBusy(false);
-        props.dataFetch({ ...userData, avatar: img });
-      }, 1000);
-    } else {
-      alert(userData.name + " sudah kenyang. Nanti malah muntah");
-    }
-  }
-
-  function drink() {
-    var status = userData.status;
-    if (status.hunger + 1 < 100) {
-      props.isBusy(true);
-      var img = userData.avatar;
-      var path = img.split("/");
-      var index = path[2].split(".", 1);
-      var newPath = "images/avatar/" + index + "-eat.gif";
-      props.dataFetch({ ...userData, avatar: newPath });
-      if (time.h >= 7 && time.h <= 18) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/kitchen-day.jpg')"
-          );
-      } else if (time.h >= 19 || time.h <= 6) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/kitchen-night.jpg')"
-          );
-      }
-      //   setTimeout(function(){m += 30;},2500);
-      setTimeout(function () {
-        status.hunger += 3;
-        props.dataFetch({ ...userData, status: status });
-        setMainBG();
-        props.isBusy(false);
-        props.dataFetch({ ...userData, avatar: img });
-      }, 1000);
-    } else {
-      alert(userData.name + " sudah kenyang. Nanti malah muntah");
-    }
-  }
-
   function play() {
     var status = userData.status;
     if (status.ent + 1 < 100) {
-      props.isBusy(true);
+      props.setBusy(true);
       var img = userData.avatar;
       var path = img.split("/");
       var index = path[2].split(".", 1);
-      if (time.h >= 7 && time.h <= 18) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/play-day.jpg')"
-          );
-        var newPath = "images/avatar/" + index + "-play-day.gif";
-      } else if (time.h >= 19 || time.h <= 6) {
-        document
-          .getElementsByTagName("BODY")[0]
-          .setAttribute(
-            "style",
-            "background-image: url('images/background/play-night.jpg')"
-          );
-        newPath = "images/avatar/" + index + "-play-night.gif";
-      }
+      var newPath = "images/avatar/" + index + "-back.png";
       props.dataFetch({ ...userData, avatar: newPath });
-      //   setTimeout(function(){h += 1;},2500);
+      document.getElementsByTagName("BODY")[0].setAttribute("style","background-image: url('images/background/wahana.gif')");
       setTimeout(function () {
         status.ent += 9;
         status.rest -= 5;
         status.hunger -= 10;
-        props.dataFetch({ ...userData, status: status });
+        props.dataFetch({ ...userData, avatar: img, status: status });
+        time.h += 5;
+        time.m += 3;
+        props.fastForward({...time});
+        props.setBusy(false);
         setMainBG();
-        props.isBusy(false);
-        props.dataFetch({ ...userData, avatar: img });
-      }, 1000);
+      }, 3000);
     }
   }
 
@@ -229,8 +141,8 @@ function Park(props) {
         <Row>
           {/* Actions TEST*/}
           <p>Activities</p>
-          <Button variant="success" disabled id="eat">
-            Naik Kincir Angin
+          <Button variant="success" disabled id="play">
+            Naik Wahana
           </Button>
         </Row>
       );
@@ -239,7 +151,7 @@ function Park(props) {
         <Row>
           {/* Actions TEST*/}
           <p>Activities</p>
-          <Button variant="success" onClick={eat} id="eat">
+          <Button variant="success" onClick={play} id="play">
             Naik Wahana
           </Button>
         </Row>
