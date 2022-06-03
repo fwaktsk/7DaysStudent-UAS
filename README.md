@@ -1,13 +1,25 @@
-# Getting Started with Create React App
+# 7 Days Student
+7 Days Student adalah project simulasi kehidupan mahasiswa yang melatih mood, time, and "getting your life together" management dari pemain selama 7 hari dengan kondisi yang realistis. Permainan ini akan membawa pemain kedalam tantangan untuk memanajemen hidup dan waktunya.
 
+## Kelas: IF231-F
+### Anggota Kelompok:
+Steven Vincent Hendrawan (00000043664)
+Meitio Susanto (00000044843)
+Moch. Bima (00000045997)
+Dwi Rianto (00000047842)
+
+# HOW TO INSTALL
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+For local installation, nodejs or similar apps is necessary. For installation, refer to this link: https://nodejs.org/en/download/
 
 ## Available Scripts
 
-In the project directory, you can run:
+Once you installed node, in the project directory you can run:
+
+### `npm install`
+Allows you to download the wonderful depedencies necessary to initialize and run the react app project.
 
 ### `npm start`
-
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
@@ -29,42 +41,8 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+# HOW TO PLAY
+Permainan ini dapat dimainkan dengan mudah, setelah menjalankan project (dengan npm start, misalnya), pemain hanya perlu memasukkan nama dan memilih satu dari 5 jurusan FTI yang tersedia. Untuk dapat melanjutkan permainan, pemain dapat berinteraksi dengan tombol-tombol yang tersedia pada layar (laman web). Setiap tombol akan mempengaruhi status pemain, gunakan strategi dengan memanfaatkan tombol yang tersedia untuk dapat berprogress dengan baik dalam permainan dan menempuh minggu pertama perkuliahan pemain. Ada beberapa aktivitas yang dapat menghasilkan sesuatu yang cukup random sehingga sangat dianjurkan untuk mendalami permainan :D
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## GOAL
+Tujuan pemain adalah untuk menyelesaikan perkuliahan selama seminggu serta mengendalikan status agar tidak terlalu memberatkan diri, namun juga dapat menikmati kehidupan seperti manusia pada umumnya (realistis). Progress pemain akan dinilai berdasarkan kinerja pemain pada perkuliahan, sehingga strategi terbaik dibutuhkan untuk memenangkan permainan dengan baik
