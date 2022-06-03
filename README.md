@@ -2,7 +2,7 @@
 7 Days Student adalah project simulasi kehidupan mahasiswa yang melatih mood, time, and "getting your life together" management dari pemain selama 7 hari dengan kondisi yang realistis. Permainan ini akan membawa pemain kedalam tantangan untuk memanajemen hidup dan waktunya.
 
 ## Kelas: IF231-F
-### Anggota Kelompok:
+### Anggota Kelompok 2:
 Steven Vincent Hendrawan (00000043664)
 
 Meitio Susanto (00000044843)
