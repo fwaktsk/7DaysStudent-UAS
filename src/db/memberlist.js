@@ -1,11 +1,11 @@
 const members = [
     {
       id: 1,
-      name: "Dwi Rianto, S. Pd.",
+      name: "Steven Vincent, S. Idl.",
       imgURL:
-        "images/about/nto.jpg",
-      nim: "00000047842",
-      email: "dwi.rianto@student.umn.ac.id"
+        "images/about/steven.jpg",
+      nim: "00000043664",
+      email: "steven.hendrawan@student.umn.ac.id"
     },
     {
       id: 2,
@@ -24,13 +24,13 @@ const members = [
       email: "moch.bima@student.umn.ac.id"
     },
     {
-        id: 4,
-        name: "Steven Vincent, S. Idl.",
-        imgURL:
-          "images/about/steven.jpg",
-        nim: "00000043664",
-        email: "steven.hendrawan@student.umn.ac.id"
-      }
+      id: 4,
+      name: "Dwi Rianto, S. Pd.",
+      imgURL:
+        "images/about/nto.jpg",
+      nim: "00000047842",
+      email: "dwi.rianto@student.umn.ac.id"
+    }
   ];
   
   export default members;

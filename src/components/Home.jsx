@@ -221,6 +221,12 @@ function Home(props) {
 
   function goToCampus() {
     if (time.h >= 6) {
+      var x = Math.floor(Math.random()*100);
+      console.log(x);
+      if(x<10)
+      {
+        props.accident(true);
+      }
       props.playMode("campus");
     } else {
       alert("Masih malem dek");
@@ -229,6 +235,12 @@ function Home(props) {
 
   function goToCafe() {
     if (time.h >= 9) {
+      var x = Math.floor(Math.random()*100);
+      console.log(x);
+      if(x<10)
+      {
+        props.accident(true);
+      }
       props.playMode("cafe");
     } else {
       alert("Cafe masih tutup tsay");
@@ -237,6 +249,12 @@ function Home(props) {
 
   function goToPark() {
     if (time.h >= 8) {
+      var x = Math.floor(Math.random()*100);
+      console.log(x);
+      if(x<10)
+      {
+        props.accident(true);
+      }
       props.playMode("park");
     } else {
       alert("Look at the time, kid. It's not for Dufan");
@@ -245,6 +263,12 @@ function Home(props) {
 
   function goToTheater() {
     if (time.h >= 8) {
+      var x = Math.floor(Math.random()*100);
+      console.log(x);
+      if(x<10)
+      {
+        props.accident(true);
+      }
       props.playMode("cgv");
     } else {
       alert("Gada anime babang uibu");

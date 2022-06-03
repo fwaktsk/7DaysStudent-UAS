@@ -10,6 +10,7 @@ function SelectAvatar(props) {
 
   const startGame = () => {
     if (avatar !== "" && name !== "" && major !== "") {
+      props.resetSecret(false)
       props.dataFetch({
         avatar: avatar,
         name: name,
@@ -38,7 +39,7 @@ function SelectAvatar(props) {
       }
       props.getWeather();
       props.getNews();
-      props.timeStart({ d: 0, h: 0, m: 0 });
+      props.timeStart({ d: 0, h: 9, m: 0 });
       const initbg =
         "background-image: url('images/background/living-room-pastmidnight.jpg')";
       document.getElementsByTagName("BODY")[0].setAttribute("style", initbg);

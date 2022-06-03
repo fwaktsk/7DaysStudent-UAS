@@ -94,10 +94,22 @@ function Cafe(props) {
   }
 
   function goToHome() {
+    var x = Math.floor(Math.random()*100);
+    console.log(x);
+    if(x<10)
+    {
+      props.accident(true);
+    }
     props.playMode("home");
   }
 
   function goToCampus() {
+    var x = Math.floor(Math.random()*100);
+    console.log(x);
+    if(x<10)
+    {
+      props.accident(true);
+    }
     if (time.h >= 6) {
       props.playMode("campus");
     } else {
@@ -106,6 +118,12 @@ function Cafe(props) {
   }
 
   function goToPark() {
+    var x = Math.floor(Math.random()*100);
+    console.log(x);
+    if(x<10)
+    {
+      props.accident(true);
+    }
     if (time.h >= 8) {
       props.playMode("park");
     } else {
@@ -114,6 +132,12 @@ function Cafe(props) {
   }
 
   function goToTheater() {
+    var x = Math.floor(Math.random()*100);
+    console.log(x);
+    if(x<10)
+    { 
+      props.accident(true);
+    }
     if (time.h >= 8) {
       props.playMode("cgv");
     } else {

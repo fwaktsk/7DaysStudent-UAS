@@ -32,7 +32,8 @@ function Park(props) {
       setMainBG();
       if(String(weather) === "Rain")
       {
-        props.playMode("home");
+        // props.playMode("home");
+        alert("Tamannya tutup karena hujan, pulang yuk");
       }
     }, 1000);
 
@@ -136,7 +137,7 @@ function Park(props) {
   }
 
   function Business() {
-    if (acts) {
+    if (acts || String(weather) === "Rain") {
       return (
         <Row>
           {/* Actions TEST*/}

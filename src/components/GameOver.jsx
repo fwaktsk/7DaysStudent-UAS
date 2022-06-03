@@ -12,9 +12,13 @@ function GameOver(props)
             {
                 document.getElementsByTagName("BODY")[0].setAttribute("style","background-image: url('images/background/adios.png')");
             }
-            else
+            else if(props.secretEnd)
             {
                 document.getElementsByTagName("BODY")[0].setAttribute("style", "background-image: url('images/background/secret.gif')");
+            }
+            else
+            {
+                document.getElementsByTagName("BODY")[0].setAttribute("style", "background-image: url('images/background/MainMenu.png')");
             }
         }
     }

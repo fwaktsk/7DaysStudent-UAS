@@ -18,7 +18,7 @@ function App(props) {
     status: { hunger: 75, ent: 75, rest: 75, study: 0 },
   });
   const [acts, setActs] = useState(false);
-  const [time, setTime] = useState({ d: 0, h: 0, m: 0 });
+  const [time, setTime] = useState({ d: 0, h: 9, m: 0 });
   const [greet, setGreet] = useState("");
   const [weather, setWeather] = useState("");
   const [weatherData, setWeatherData] = useState();
@@ -27,6 +27,7 @@ function App(props) {
   const [newsIdx, setNewsIdx] = useState(0);
   const [weatherIdx, setWeatherIdx] = useState(0);
   const [lessons, setLessons] = useState();
+  const [secret, setSecret] = useState(false);
   const urlWeather =
     "http://api.openweathermap.org/data/2.5/forecast?lat=-6.256098&lon=106.618947&appid=7ca07ae2937263bad45b68abf9522fe3";
   const urlNews =
@@ -51,6 +52,11 @@ function App(props) {
   const updateLesson = (bundle) =>{
     setLessons(bundle);
   };
+
+  const triggerSecret = (click) =>
+  {
+    setSecret(click);
+  }
 
   const updateWeather = () => {
     setWeatherIdx(weatherIdx + 1);
@@ -82,11 +88,21 @@ function App(props) {
   useEffect(() => {
     const clock = setInterval(function () {
       if (view !== "setup" && view !== "credits" && view !== "gameOver") {
-
+        if(secret)
+        {
+          alert("GAME OVER... " + userData.name + " mengalami kecelakaan saat berpergian. Jiwanya akan selalu diingat");
+            var img = document.getElementById("avatar");
+            var e = img.getAttribute("src");
+            var path = e.split("/");
+            var index = path[2].split(".", 1);
+            var newPath = "images/avatar/" + index + "-kecelakaan.png";
+            setUserData({ ...userData, avatar: newPath });
+            setView("gameOver");
+        }
         if (userData.status.hunger <= 0 || userData.status.ent <= 0 || userData.status.rest <= 0) {
           if (userData.status.hunger <= 0)
           {
-            alert("GAME OVER... " + userData.name + " meninggal akibat tidak dapat mendapat bansos untuk makan :(((");
+            alert("GAME OVER... " + userData.name + " meninggal akibat kekurangan gizi dan maagnya kambuh :(((");
             var img = document.getElementById("avatar");
             var e = img.getAttribute("src");
             var path = e.split("/");
@@ -205,6 +221,7 @@ function App(props) {
     if (view === "setup") {
       return (
         <SelectAvatar
+          resetSecret = {triggerSecret}
           dataFetch={playerSetup}
           playMode={updateMode}
           timeStart={updateTime}
@@ -224,6 +241,7 @@ function App(props) {
           weather={weather}
           news = {news}
           isBusy = {acts}
+          accident = {triggerSecret}
           playMode={updateMode}
           dataFetch={playerSetup}
           setBusy={disableButton}
@@ -243,6 +261,7 @@ function App(props) {
           news = {news}
           isBusy = {acts}
           matcool = {lessons}
+          accident = {triggerSecret}
           playMode={updateMode}
           dataFetch={playerSetup}
           setBusy={disableButton}
@@ -262,6 +281,7 @@ function App(props) {
           weather={weather}
           news = {news}
           isBusy = {acts}
+          accident = {triggerSecret}
           playMode={updateMode}
           dataFetch={playerSetup}
           setBusy={disableButton}
@@ -279,6 +299,7 @@ function App(props) {
           weather={weather}
           news = {news}
           isBusy = {acts}
+          accident = {triggerSecret}
           playMode={updateMode}
           dataFetch={playerSetup}
           fastForward={updateTime}
@@ -297,6 +318,7 @@ function App(props) {
           weather={weather}
           news = {news}
           isBusy = {acts}
+          accident = {triggerSecret}
           playMode={updateMode}
           dataFetch={playerSetup}
           fastForward={updateTime}
@@ -308,7 +330,8 @@ function App(props) {
     {
       return <GameOver avatar={userData.avatar}
                       playMode={updateMode}
-                      day = {time.d}/>
+                      day = {time.d}
+                      secretEnd = {secret}/>
     }else if (view === "credits") {
       return <AboutUs playMode={updateMode} />;
     }
