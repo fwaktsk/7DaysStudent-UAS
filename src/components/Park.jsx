@@ -32,7 +32,7 @@ function Park(props) {
       setMainBG();
       if(String(weather) === "Rain")
       {
-        // props.playMode("home");
+        props.playMode("home");
         alert("Tamannya tutup karena hujan, pulang yuk");
       }
     }, 1000);
