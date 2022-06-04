@@ -2,31 +2,31 @@ const lesson = [
     [
         {
         nama_matkul: "Sistem Digital",
-        learnt: true
+        learnt: false
         },
         {
         nama_matkul: "Matematika Diskrit",
-        learnt: true
+        learnt: false
         },
         {
         nama_matkul: "Bahasa Indonesia",
-        learnt: true
+        learnt: false
         },
         {
         nama_matkul: "Bahasa Inggris 1",
-        learnt: true
+        learnt: false
         },
         {
         nama_matkul: "Pancasila",
-        learnt: true
+        learnt: false
         },
         {
         nama_matkul: "Kewarganegaraan",
-        learnt: true
+        learnt: false
         },
         {
         nama_matkul: "Agama",
-        learnt: true
+        learnt: false
         }
     ],
     [
